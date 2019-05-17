@@ -1,0 +1,156 @@
+﻿<Window x:Class="BlocoX.AppTeste.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlocoX.AppTeste"
+        mc:Ignorable="d"
+        Title="Bloco X"
+        SizeToContent="WidthAndHeight"
+        >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding ElementName=grpBoxServico, Path=Height}"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TabControl 
+                Grid.Column="0"
+                Grid.RowSpan="2"
+                VerticalAlignment="Top"
+                MinHeight="200" 
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                MinWidth="400">
+            <TabItem Header="Configurações">
+                <Grid Background="#FFE5E5E5">
+                    <StackPanel>
+                        <GroupBox Header="XSD">
+                            <StackPanel>
+                                <StackPanel>
+                                    <TextBlock Margin="3">Validar XSD</TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton x:Name="rdbXsdSim" GroupName="xsd" Margin="3">Sim</RadioButton>
+                                        <RadioButton GroupName="xsd" Margin="3" IsChecked="True">Não</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Margin="5" IsEnabled="{Binding ElementName=rdbXsdSim, Path=IsChecked}">
+                                    <TextBlock Margin="3">Diretório XSD</TextBlock>
+                                    <WrapPanel>
+                                        <TextBox x:Name="txtDiretorioXsd" Margin="3" Width="200"></TextBox>
+                                        <Button Margin="3">Diretorio</Button>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Arquivos">
+                            <StackPanel>
+                                <StackPanel>
+                                    <TextBlock Margin="3">Salvar Arquivos</TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton x:Name="rdbArquivosSim" GroupName="Arquivos" Margin="3">Sim</RadioButton>
+                                        <RadioButton GroupName="Arquivos" Margin="3" IsChecked="True">Não</RadioButton>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Margin="5" IsEnabled="{Binding ElementName=rdbArquivosSim, Path=IsChecked}">
+                                    <TextBlock>Diretório Salvar Arquivo</TextBlock>
+                                    <WrapPanel>
+                                        <TextBox x:Name="txtDiretorioSalvaArquivo" Margin="3" Width="200"></TextBox>
+                                        <Button Margin="3">Diretorio</Button>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Estabelecimento">
+                <Grid Background="#FFE5E5E5">
+                    <StackPanel>
+                        <StackPanel Margin="5">
+                            <TextBlock>Razão Social:</TextBlock>
+                            <TextBox></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="5">
+                                <TextBlock>CNPJ:</TextBlock>
+                                <TextBox Width="200"></TextBox>
+                            </StackPanel>
+                            <StackPanel Margin="5">
+                                <TextBlock>IE:</TextBlock>
+                                <TextBox Width="100"></TextBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Software">
+                <Grid Background="#FFE5E5E5">
+                    <StackPanel>
+                        <StackPanel Margin="5">
+                            <TextBlock>Número Credenciamento:</TextBlock>
+                            <TextBox></TextBox>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <GroupBox Grid.Column="1" 
+                  Margin="5"
+                  x:Name="grpBoxServico"
+                  VerticalAlignment="Top"
+                  Header="Serviços">
+            <WrapPanel>
+                <Button Margin="3" Width="100" x:Name="btnConsultar" Click="BtnConsultar_Click">Consultar</Button>
+                <Button Margin="3" Width="100" x:Name="btnSituacaoPafEcf" Click="BtnSituacaoPafEcf_Click">Situação Paf Ecf</Button>
+                <Button Margin="3" Width="100" x:Name="btnValidar" Click="BtnValidar_Click">Validar</Button>
+                <Button Margin="3" Width="100" x:Name="btnEnviar" Click="BtnEnviar_Click">Enviar</Button>
+            </WrapPanel>
+        </GroupBox>
+
+        <TabControl 
+                Grid.Column="1"
+                Grid.Row="2"
+                Margin="5"
+                Height="Auto"
+                VerticalAlignment="Top"
+                >
+            <TabItem Header="Envio">
+                <Grid Background="#FFE5E5E5">
+                    <RichTextBox x:Name="RtbEnvio" Margin="0" VerticalScrollBarVisibility="Visible"
+                                 IsReadOnly="True">
+                        <FlowDocument />
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Retorno XML">
+                <Grid Background="#FFE5E5E5">
+                    <WebBrowser x:Name="WebXmlRetorno" />
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Retorno Str">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75*"/>
+                        <ColumnDefinition Width="319*"/>
+                    </Grid.ColumnDefinitions>
+                    <RichTextBox x:Name="RtbRetornoStr" Margin="0" VerticalScrollBarVisibility="Visible"
+                                 IsReadOnly="True" Grid.ColumnSpan="2">
+                        <FlowDocument />
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
