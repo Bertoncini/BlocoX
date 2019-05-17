@@ -57,17 +57,17 @@ namespace BlocoX.Servicos
             byte[] fileBytes = null;
 
             // create a working memory stream
-            using(var memoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
                 // create a zip
-                using(var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                using (var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
                 {
                     // add the item name to the zip
                     var zipItem = zip.CreateEntry(fileName);
 
                     // add the item bytes to the zip entry by opening the original file and copying the bytes 
-                    using(var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(pXml)))
-                    using(var entryStream = zipItem.Open())
+                    using (var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(pXml)))
+                    using (var entryStream = zipItem.Open())
                         originalFileMemoryStream.CopyTo(entryStream);
                 }
 
@@ -88,17 +88,17 @@ namespace BlocoX.Servicos
             byte[] fileBytes = null;
 
             // create a working memory stream
-            using(var memoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
                 // create a zip
-                using(var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                using (var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
                 {
                     // add the item name to the zip
                     var zipItem = zip.CreateEntry(fileName);
 
                     // add the item bytes to the zip entry by opening the original file and copying the bytes 
-                    using(var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(pXml)))
-                    using(var entryStream = zipItem.Open())
+                    using (var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(pXml)))
+                    using (var entryStream = zipItem.Open())
                         originalFileMemoryStream.CopyTo(entryStream);
                 }
 
@@ -122,17 +122,17 @@ namespace BlocoX.Servicos
                 byte[] fileBytes = null;
 
                 // create a working memory stream
-                using(var memoryStream = new MemoryStream())
+                using (var memoryStream = new MemoryStream())
                 {
                     // create a zip
-                    using(var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                    using (var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
                     {
                         // add the item name to the zip
                         var zipItem = zip.CreateEntry(fileName);
 
                         // add the item bytes to the zip entry by opening the original file and copying the bytes 
-                        using(var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(pXml)))
-                        using(var entryStream = zipItem.Open())
+                        using (var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(pXml)))
+                        using (var entryStream = zipItem.Open())
                             originalFileMemoryStream.CopyTo(entryStream);
                     }
 
@@ -141,14 +141,12 @@ namespace BlocoX.Servicos
 
                 ws.Params.Add("pXml", Convert.ToBase64String(fileBytes));
 
-                //base64Binary
                 ws.Params.Add("pValidarPafEcfEEcf", "true");
                 ws.Params.Add("pValidarAssinaturaDigital", "true");
-                //ws.Params.Add("pXml", Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(pXml)));
                 ws.Invoke();
                 return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 return new Retorno(ws.ResultXML, "Problema ao validar arquivo", ws.SoapStr);
             }
