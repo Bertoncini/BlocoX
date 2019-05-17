@@ -40,11 +40,11 @@
                                     <TextBlock Margin="3">Local Certificado:</TextBlock>
                                     <WrapPanel>
                                         <TextBox x:Name="txtLocalCertificado" Margin="3" Width="200"></TextBox>
-                                        <Button Margin="3">Arq. Certificado</Button>
+                                        <Button Margin="3" x:Name="btnArqCertificado" Click="BtnArqCertificado_Click">Arq. Certificado</Button>
                                     </WrapPanel>
                                         <TextBlock Margin="3">Senha Certificado:</TextBlock>
                                         <WrapPanel>
-                                            <TextBox x:Name="txtSenhaCertificado" Margin="3" Width="200"></TextBox>
+                                            <TextBox x:Name="txtSenhaCertificado" Margin="3" Width="200" TextChanged="TxtSenhaCertificado_TextChanged"></TextBox>
                                         </WrapPanel>
                                     </StackPanel>
                             </StackPanel>

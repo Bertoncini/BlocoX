@@ -106,6 +106,10 @@
       <Project>{30be510b-3248-4681-baac-9cfed518e7cf}</Project>
       <Name>BlocoX.Servicos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BlocoX.Utils\BlocoX.Utils.csproj">
+      <Project>{A4E1F0F4-BA8D-4ADF-8163-44128A5C974B}</Project>
+      <Name>BlocoX.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

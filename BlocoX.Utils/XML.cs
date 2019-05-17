@@ -96,7 +96,7 @@ namespace BlocoX.Utils
                 <VendaBrutaDiaria>{blocoXRz.Ecf.DadosReducaoZ.VendaBrutaDiaria.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(14, "0", eOrietacao.Esquerda)}</VendaBrutaDiaria>
                 <GT>{blocoXRz.Ecf.DadosReducaoZ.GT.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(18, "0", eOrietacao.Esquerda)}</GT>
                 <TotalizadoresParciais>
-                    {xmlStringBlocoXRzTotalizadorParcial((dynamic)blocoXRz.Ecf.DadosReducaoZ.TotalizadoresParciais)}
+                    {xmlStringBlocoXRzTotalizadorParcial(blocoXRz.Ecf.DadosReducaoZ.TotalizadoresParciais)}
                 </TotalizadoresParciais>
             </DadosReducaoZ>
         </Ecf>
@@ -137,6 +137,26 @@ namespace BlocoX.Utils
             return rzTotalizadoresParciais;
         }
 
+        private static string xmlStringBlocoXRzTotalizadorParcial(List<Modelos.ReducaoZ.TotalizadorParcial> totalizadores)
+        {
+            var rzTotalizadoresParciais = string.Empty;
+
+            foreach (var totalizador in totalizadores)
+            {
+                rzTotalizadoresParciais = $@"
+<TotalizadorParcial>
+    <Nome>{totalizador.Nome}</Nome>
+    <Valor>{totalizador.Valor.ToString("N2").Replace(".", "")}</Valor>
+    <ProdutosServicos>
+        {xmlStringBlocoXProduto(totalizador.ProdutosServicos)}
+    </ProdutosServicos>
+</TotalizadorParcial>
+";
+            }
+
+            return rzTotalizadoresParciais;
+        }
+
         private static string xmlStringBlocoXProduto(List<dynamic> produtos)
         {
             var strProdutos = string.Empty;
@@ -146,16 +166,42 @@ namespace BlocoX.Utils
                 strProdutos = $@"
         <Produto>
             <Descricao>{produto.Descricao.Substring(produto.Descricao.LastIndexOf("#") + 1)}</Descricao>
-            <CodigoGTIN>{produto.Codigo}</CodigoGTIN>
-            <CodigoCEST>{produto.Descricao.Substring(2, produto.Descricao.LastIndexOf("#") - 2)}</CodigoCEST>
-            <CodigoNCMSH>6666666</CodigoNCMSH>
-            <CodigoProprio>{produto.Codigo}</CodigoProprio>
-            <Quantidade>{produto.Quantidade},00</Quantidade>
+            <CodigoGTIN>{produto.CodigoGTIN}</CodigoGTIN>
+            <CodigoCEST>{produto.CodigoCEST}</CodigoCEST>
+            <CodigoNCMSH>{produto.NCM}</CodigoNCMSH>
+            <CodigoProprio>{produto.CodigoProprio}</CodigoProprio>
+            <Quantidade>{produto.Quantidade.ToString("N2").Replace(".", "")}</Quantidade>
             <Unidade>{produto.Unidade}</Unidade>
-            <ValorDesconto>0,00</ValorDesconto>
-            <ValorAcrescimo>0,00</ValorAcrescimo>
-            <ValorCancelamento>0,00</ValorCancelamento>
-            <ValorTotalLiquido>{produto.ValorUnitario.ToString("N2").Replace(".", ",")}</ValorTotalLiquido>
+            <ValorDesconto>{produto.ValorDesconto.ToString("N2").Replace(".", "")}</ValorDesconto>
+            <ValorAcrescimo>{produto.ValorAcrescimo.ToString("N2").Replace(".", "")}</ValorAcrescimo>
+            <ValorCancelamento>{produto.ValorCancelamento.ToString("N2").Replace(".", "")}</ValorCancelamento>
+            <ValorTotalLiquido>{produto.ValorTotalLiquido.ToString("N2").Replace(".", "")}</ValorTotalLiquido>
+        </Produto>
+";
+            }
+
+            return strProdutos;
+        }
+
+        private static string xmlStringBlocoXProduto(List<Modelos.ReducaoZ.ProdutoServico> produtos)
+        {
+            var strProdutos = string.Empty;
+
+            foreach (var produto in produtos)
+            {
+                strProdutos = $@"
+        <Produto>
+            <Descricao>{produto.Descricao.Substring(produto.Descricao.LastIndexOf("#") + 1)}</Descricao>
+            <CodigoGTIN>{produto.CodigoGTIN}</CodigoGTIN>
+            <CodigoCEST>{produto.CodigoCEST}</CodigoCEST>
+            <CodigoNCMSH>{produto.NCM}</CodigoNCMSH>
+            <CodigoProprio>{produto.CodigoProprio}</CodigoProprio>
+            <Quantidade>{produto.Quantidade.ToString("N2").Replace(".", "")}</Quantidade>
+            <Unidade>{produto.Unidade}</Unidade>
+            <ValorDesconto>{produto.ValorDesconto.ToString("N2").Replace(".", "")}</ValorDesconto>
+            <ValorAcrescimo>{produto.ValorAcrescimo.ToString("N2").Replace(".", "")}</ValorAcrescimo>
+            <ValorCancelamento>{produto.ValorCancelamento.ToString("N2").Replace(".", "")}</ValorCancelamento>
+            <ValorTotalLiquido>{produto.ValorTotalLiquido.ToString("N2").Replace(".", "")}</ValorTotalLiquido>
         </Produto>
 ";
             }

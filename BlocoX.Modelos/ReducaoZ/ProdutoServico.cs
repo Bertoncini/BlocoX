@@ -52,7 +52,7 @@ namespace BlocoX.Modelos.ReducaoZ
         public string CodigoCEST { get; private set; }
         public string NCM { get; private set; }
         public string CodigoProprio { get; private set; }
-        public int Quantidade { get; private set; }
+        public decimal Quantidade { get; private set; }
         public string Unidade { get; private set; }
         public decimal ValorDesconto { get; private set; }
         public decimal ValorAcrescimo { get; private set; }

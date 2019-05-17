@@ -53,7 +53,7 @@ namespace BlocoX.Utils.Arquivos
             dadosRz.AdicionarTotalizador(totalizadorAliquota12);
 
             var blocoxRz = new BlocoX.Modelos.ReducaoZ.BlocoXRZ(
-                new Modelos.ReducaoZ.Estabelecimento("253525000"),
+                new Modelos.ReducaoZ.Estabelecimento("257477110"),
                 new Modelos.ReducaoZ.PafEcf("123456789012345"),
                 new Modelos.ReducaoZ.Ecf("UR010905000", dadosRz)
                 );

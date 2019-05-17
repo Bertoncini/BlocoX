@@ -30,6 +30,7 @@
 namespace BlocoX.AppTeste
 {
     using BlocoX.Servicos;
+    using BlocoX.Utils;
     using Microsoft.Win32;
     using System;
     using System.Configuration;
@@ -43,7 +44,9 @@ namespace BlocoX.AppTeste
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly string _path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         ServicosBlocoX servicos = new ServicosBlocoX();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -60,9 +63,13 @@ namespace BlocoX.AppTeste
             txtEstabelecimentoIe.Text = readSetting("estabelecimentoIe");
 
             txtNumeroCredenciamentoSW.Text = readSetting("swNumeroEstabelecimento");
+
+            Config.localSenhaCertificado = new System.Collections.Generic.KeyValuePair<string, string>(txtLocalCertificado.Text, txtSenhaCertificado.Text);
         }
 
         private void mensagemAviso(string mensagem) => MessageBox.Show(mensagem, "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+
+        private MessageBoxResult mensagemConfrimacao(string mensagem) => MessageBox.Show(mensagem, "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly);
 
         private void BtnConsultar_Click(object sender, RoutedEventArgs e)
         {
@@ -107,13 +114,24 @@ namespace BlocoX.AppTeste
         private void BtnEnviar_Click(object sender, RoutedEventArgs e)
         {
             var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
+            var xmlDoc = new System.Xml.XmlDocument();
             if (string.IsNullOrWhiteSpace(input))
             {
-                mensagemAviso("O arquivo XML é obrigatório!");
-                return;
+                if (mensagemConfrimacao("Não foi informado um XML, deseja enviar um default?") == MessageBoxResult.No)
+                    return;
+
+                if (string.IsNullOrWhiteSpace(txtLocalCertificado.Text) || string.IsNullOrWhiteSpace(txtSenhaCertificado.Text))
+                {
+                    mensagemAviso("Para enviar o arquivo default deve se informar o certificado para realizar a assinatura!");
+                    return;
+                }
+
+                xmlDoc = new Utils.Arquivos.Exemplo().Xml();
+                xmlDoc.AssinarXML("ReducaoZ");
+
             }
-            var xmlDoc = new System.Xml.XmlDocument();
-            xmlDoc.Load(input);
+            else
+                xmlDoc.Load(input);
 
             trataRetorno(servicos.Enviar(xmlDoc.InnerXml));
         }
@@ -128,7 +146,6 @@ namespace BlocoX.AppTeste
                 RetornoXml(WebXmlRetorno, retorno.ResultXML);
         }
 
-        private readonly string _path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         private void RetornoXml(WebBrowser webBrowser, XmlDocument resultXML)
         {
             var stw = new StreamWriter(_path + @"\tmp.xml");
@@ -142,6 +159,7 @@ namespace BlocoX.AppTeste
             richTextBox.Document.Blocks.Clear();
             richTextBox.AppendText(resultString);
         }
+
         private void EnvioStr(RichTextBox richTextBox, string soapSent)
         {
             richTextBox.Document.Blocks.Clear();
@@ -227,6 +245,25 @@ namespace BlocoX.AppTeste
             {
                 Console.WriteLine("Error writing app settings");
             }
+        }
+
+        private void BtnArqCertificado_Click(object sender, RoutedEventArgs e)
+        {
+            var input = selecionarArquivo("Selecionar Certificado", ".pdf", "Certificado (.pfx)|*.pfx");
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                mensagemAviso("Não foi selecionado um certificado.");
+                return;
+            }
+
+            txtLocalCertificado.Text = input;
+
+            Config.localSenhaCertificado = new System.Collections.Generic.KeyValuePair<string, string>(txtLocalCertificado.Text, txtSenhaCertificado.Text);
+        }
+
+        private void TxtSenhaCertificado_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Config.localSenhaCertificado = new System.Collections.Generic.KeyValuePair<string, string>(txtLocalCertificado.Text, txtSenhaCertificado.Text);
         }
     }
 }
