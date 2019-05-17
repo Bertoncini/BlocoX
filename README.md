@@ -1,8 +1,8 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/cqvvdqd6wj83er64/branch/master?svg=true)](https://ci.appveyor.com/project/bertoncini/blocox/branch/master) 
+[![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva/branch/master?svg=true)](https://ci.appveyor.com/project/Bertoncini/blocox/branch/master) 
 [![Issues](https://img.shields.io/github/issues/Bertoncini/BlocoX.svg?style=flat-square)](https://github.com/Bertoncini/BlocoX/issues)
 
 
-DFe.NET
+BlocoX
 =================
 Grupo [Skype](https://join.skype.com/merZOqMzfxqP) para discussão
 
