@@ -34,7 +34,7 @@ namespace BlocoX.Utils
 
     public static class XML
     {
-        public static string JsonToXml(this string json)
+        public static XmlDocument JsonToXml(this string json)
         {
             dynamic jsonObject = DynamicJsonConverter.ConvertToObject(json);
 
@@ -67,7 +67,44 @@ namespace BlocoX.Utils
 </ReducaoZ>
 ";
 
-            return string.Empty;
+            return xml.StringToXml();
+        }
+
+        public static XmlDocument BlocoXRZToString(this Modelos.ReducaoZ.BlocoXRZ blocoXRz)
+        {
+            if (blocoXRz == null)
+                throw new System.ArgumentNullException(nameof(blocoXRz));
+
+            var xml =
+          $@"<?xml version='1.0' encoding='UTF‐8'?>
+<ReducaoZ Versao='1.0'>
+    <Mensagem>
+        <Estabelecimento>
+            <Ie>{blocoXRz.Estabelecimento.Ie}</Ie>
+        </Estabelecimento>
+        <PafEcf>
+            <NumeroCredenciamento>{blocoXRz.PafEcf.NumeroCredenciamento}</NumeroCredenciamento>
+        </PafEcf>
+        <Ecf>
+            <NumeroFabricacao>{blocoXRz.Ecf.NumeroFabricacao}</NumeroFabricacao>
+            <DadosReducaoZ>
+                <DataReferencia>{blocoXRz.Ecf.DadosReducaoZ.DataReferencia.ToString("yyyy-MM-dd")}</DataReferencia>
+                <DataHoraEmissao>{blocoXRz.Ecf.DadosReducaoZ.DataHoraEmissao.ToString("yyyy-MM-ddTHH:mm:ss-03:00")}</DataHoraEmissao>
+                <CRZ>{blocoXRz.Ecf.DadosReducaoZ.CRZ.ToString().CortaCompleta(4, "0", eOrietacao.Esquerda)}</CRZ>
+                <COO>{blocoXRz.Ecf.DadosReducaoZ.COO.ToString().CortaCompleta(9, "0", eOrietacao.Esquerda)}</COO>
+                <CRO>{blocoXRz.Ecf.DadosReducaoZ.CRO.ToString().CortaCompleta(3, "0", eOrietacao.Esquerda)}</CRO>
+                <VendaBrutaDiaria>{blocoXRz.Ecf.DadosReducaoZ.VendaBrutaDiaria.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(14, "0", eOrietacao.Esquerda)}</VendaBrutaDiaria>
+                <GT>{blocoXRz.Ecf.DadosReducaoZ.GT.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(18, "0", eOrietacao.Esquerda)}</GT>
+                <TotalizadoresParciais>
+                    {xmlStringBlocoXRzTotalizadorParcial((dynamic)blocoXRz.Ecf.DadosReducaoZ.TotalizadoresParciais)}
+                </TotalizadoresParciais>
+            </DadosReducaoZ>
+        </Ecf>
+    </Mensagem>
+</ReducaoZ>
+";
+
+            return xml.StringToXml();
         }
 
         public static string XmlToString(this XmlDocument document) => document.InnerXml.Replace("&gt;", "<").Replace("&lt;", ">");
@@ -84,7 +121,7 @@ namespace BlocoX.Utils
         {
             var rzTotalizadoresParciais = string.Empty;
 
-            foreach(var totalizador in totalizadores)
+            foreach (var totalizador in totalizadores)
             {
                 rzTotalizadoresParciais = $@"
 <TotalizadorParcial>
@@ -104,7 +141,7 @@ namespace BlocoX.Utils
         {
             var strProdutos = string.Empty;
 
-            foreach(var produto in produtos)
+            foreach (var produto in produtos)
             {
                 strProdutos = $@"
         <Produto>
@@ -124,6 +161,52 @@ namespace BlocoX.Utils
             }
 
             return strProdutos;
+        }
+
+        public static string AssinarXML(this string strXml, string tagAssinatura)
+        {
+            var certificado = Config.Certificado;
+            var xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.LoadXml(strXml);
+
+            xmlDocument = xmlDocument.AssinarXML(tagAssinatura);
+
+            return xmlDocument.InnerXml;
+        }
+
+        public static XmlDocument AssinarXML(this XmlDocument xmlDocument, string tagAssinatura)
+        {
+            var certificado = Config.Certificado;
+
+            var reference = new System.Security.Cryptography.Xml.Reference
+            {
+                Uri = ""
+            };
+
+            var signedXml = new System.Security.Cryptography.Xml.SignedXml(xmlDocument)
+            {
+                SigningKey = certificado.PrivateKey
+            };
+
+            reference.AddTransform(new System.Security.Cryptography.Xml.XmlDsigEnvelopedSignatureTransform());
+
+            reference.AddTransform(new System.Security.Cryptography.Xml.XmlDsigC14NTransform());
+
+            signedXml.AddReference(reference);
+
+            var keyInfo = new System.Security.Cryptography.Xml.KeyInfo();
+
+            keyInfo.AddClause(new System.Security.Cryptography.Xml.KeyInfoX509Data(certificado));
+
+            signedXml.KeyInfo = keyInfo;
+
+            signedXml.ComputeSignature();
+
+            var xmlDigitalSignature = signedXml.GetXml();
+
+            xmlDocument.GetElementsByTagName(tagAssinatura)[0].AppendChild(xmlDocument.ImportNode(xmlDigitalSignature, true));
+
+            return xmlDocument;
         }
     }
 }
