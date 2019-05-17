@@ -19,7 +19,11 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TabControl 
+        <StackPanel
+             Grid.Column="0"
+                Grid.RowSpan="2"
+            >
+            <TabControl 
                 Grid.Column="0"
                 Grid.RowSpan="2"
                 VerticalAlignment="Top"
@@ -30,6 +34,21 @@
             <TabItem Header="Configurações">
                 <Grid Background="#FFE5E5E5">
                     <StackPanel>
+                        <GroupBox Header="Certificado">
+                            <StackPanel>
+                                <StackPanel>
+                                    <TextBlock Margin="3">Local Certificado:</TextBlock>
+                                    <WrapPanel>
+                                        <TextBox x:Name="txtLocalCertificado" Margin="3" Width="200"></TextBox>
+                                        <Button Margin="3">Arq. Certificado</Button>
+                                    </WrapPanel>
+                                        <TextBlock Margin="3">Senha Certificado:</TextBlock>
+                                        <WrapPanel>
+                                            <TextBox x:Name="txtSenhaCertificado" Margin="3" Width="200"></TextBox>
+                                        </WrapPanel>
+                                    </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
                         <GroupBox Header="XSD">
                             <StackPanel>
                                 <StackPanel>
@@ -75,17 +94,17 @@
                     <StackPanel>
                         <StackPanel Margin="5">
                             <TextBlock>Razão Social:</TextBlock>
-                            <TextBox></TextBox>
+                            <TextBox x:Name="txtEstabelecimentoRazaoSocial"></TextBox>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Margin="5">
                                 <TextBlock>CNPJ:</TextBlock>
-                                <TextBox Width="200"></TextBox>
+                                    <TextBox x:Name="txtEstabelecimentoCnpj" Width="200"></TextBox>
                             </StackPanel>
                             <StackPanel Margin="5">
                                 <TextBlock>IE:</TextBlock>
-                                <TextBox Width="100"></TextBox>
+                                    <TextBox Width="100" x:Name="txtEstabelecimentoIe"></TextBox>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -96,25 +115,34 @@
                     <StackPanel>
                         <StackPanel Margin="5">
                             <TextBlock>Número Credenciamento:</TextBlock>
-                            <TextBox></TextBox>
+                            <TextBox x:Name="txtNumeroCredenciamentoSW"></TextBox>
                         </StackPanel>
 
                     </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>
-
+            <Button Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Click="btnSalvarConfig_Click">SALVAR</Button>
+        </StackPanel>
         <GroupBox Grid.Column="1" 
                   Margin="5"
                   x:Name="grpBoxServico"
                   VerticalAlignment="Top"
                   Header="Serviços">
-            <WrapPanel>
-                <Button Margin="3" Width="100" x:Name="btnConsultar" Click="BtnConsultar_Click">Consultar</Button>
-                <Button Margin="3" Width="100" x:Name="btnSituacaoPafEcf" Click="BtnSituacaoPafEcf_Click">Situação Paf Ecf</Button>
-                <Button Margin="3" Width="100" x:Name="btnValidar" Click="BtnValidar_Click">Validar</Button>
-                <Button Margin="3" Width="100" x:Name="btnEnviar" Click="BtnEnviar_Click">Enviar</Button>
-            </WrapPanel>
+            <StackPanel>
+                <GroupBox Header="ReduçãoZ">
+                    <WrapPanel>
+                        <Button Margin="3" Width="100" x:Name="btnConsultar" Click="BtnConsultar_Click">Consultar</Button>
+                        <Button Margin="3" Width="100" x:Name="btnSituacaoPafEcf" Click="BtnSituacaoPafEcf_Click">Situação Paf Ecf</Button>
+                        <Button Margin="3" Width="100" x:Name="btnValidar" Click="BtnValidar_Click">Validar</Button>
+                        <Button Margin="3" Width="100" x:Name="btnEnviar" Click="BtnEnviar_Click">Enviar</Button>
+                    </WrapPanel>
+                </GroupBox>
+                <GroupBox Header="Estoque">
+                    
+                </GroupBox>
+            </StackPanel>
+           
         </GroupBox>
 
         <TabControl 

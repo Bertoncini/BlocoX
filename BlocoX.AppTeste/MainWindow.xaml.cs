@@ -31,6 +31,8 @@ namespace BlocoX.AppTeste
 {
     using BlocoX.Servicos;
     using Microsoft.Win32;
+    using System;
+    using System.Configuration;
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
@@ -45,6 +47,19 @@ namespace BlocoX.AppTeste
         public MainWindow()
         {
             InitializeComponent();
+
+            txtLocalCertificado.Text = readSetting("localCertificado");
+            txtSenhaCertificado.Text = readSetting("senhaCertificado");
+            rdbXsdSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seValidaXsd")) ? "false" : readSetting("seValidaXsd"));
+            txtDiretorioXsd.Text = readSetting("diretorioXsd");
+            rdbArquivosSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seSalvaArquivo")) ? "false" : readSetting("seSalvaArquivo"));
+            txtDiretorioSalvaArquivo.Text = readSetting("diretorioSalvaArquivo");
+
+            txtEstabelecimentoRazaoSocial.Text = readSetting("estabelecimentoRazaoSocial");
+            txtEstabelecimentoCnpj.Text = readSetting("estabelecimentoCnpj");
+            txtEstabelecimentoIe.Text = readSetting("estabelecimentoIe");
+
+            txtNumeroCredenciamentoSW.Text = readSetting("swNumeroEstabelecimento");
         }
 
         private void mensagemAviso(string mensagem) => MessageBox.Show(mensagem, "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
@@ -160,6 +175,58 @@ namespace BlocoX.AppTeste
             };
             dlg.ShowDialog();
             return dlg.FileName;
+        }
+
+        private void btnSalvarConfig_Click(object sender, RoutedEventArgs e)
+        {
+            addUpdateAppSettings("localCertificado", txtLocalCertificado.Text);
+            addUpdateAppSettings("senhaCertificado", txtSenhaCertificado.Text);
+            addUpdateAppSettings("seValidaXsd", rdbXsdSim.IsChecked ?? false ? "true" : "false");
+            addUpdateAppSettings("diretorioXsd", txtDiretorioXsd.Text);
+            addUpdateAppSettings("seSalvaArquivo", rdbArquivosSim.IsChecked ?? false ? "true" : "false");
+            addUpdateAppSettings("diretorioSalvaArquivo", txtDiretorioSalvaArquivo.Text);
+
+            addUpdateAppSettings("estabelecimentoRazaoSocial", txtEstabelecimentoRazaoSocial.Text);
+            addUpdateAppSettings("estabelecimentoCnpj", txtEstabelecimentoCnpj.Text);
+            addUpdateAppSettings("estabelecimentoIe", txtEstabelecimentoIe.Text);
+
+            addUpdateAppSettings("swNumeroEstabelecimento", txtNumeroCredenciamentoSW.Text);
+        }
+
+        private static string readSetting(string key)
+        {
+            try
+            {
+                var appSettings = ConfigurationManager.AppSettings;
+                return appSettings[key] ?? string.Empty;
+            }
+            catch (ConfigurationErrorsException)
+            {
+                return string.Empty;
+            }
+        }
+
+        private static void addUpdateAppSettings(string key, string value)
+        {
+            try
+            {
+                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var settings = configFile.AppSettings.Settings;
+                if (settings[key] == null)
+                {
+                    settings.Add(key, value);
+                }
+                else
+                {
+                    settings[key].Value = value;
+                }
+                configFile.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+            }
+            catch (ConfigurationErrorsException)
+            {
+                Console.WriteLine("Error writing app settings");
+            }
         }
     }
 }
