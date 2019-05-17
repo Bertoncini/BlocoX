@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -42,11 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arquivos\Exemplo.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="DynamicJsonConverter.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="str.cs" />
     <Compile Include="XML.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlocoX.Modelos\BlocoX.Modelos.csproj">
+      <Project>{875437ff-b761-4105-b2ac-59a6848b917d}</Project>
+      <Name>BlocoX.Modelos</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
