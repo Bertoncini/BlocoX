@@ -25,5 +25,13 @@
         public decimal VendaBrutaDiaria { get; private set; }
         public decimal GT { get; private set; }
         public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+
+        public void AdicionarTotalizador(TotalizadorParcial totalizador)
+        {
+            if (TotalizadoresParciais == null)
+                TotalizadoresParciais = new List<TotalizadorParcial>();
+
+            TotalizadoresParciais.Add(totalizador);
+        }
     }
 }

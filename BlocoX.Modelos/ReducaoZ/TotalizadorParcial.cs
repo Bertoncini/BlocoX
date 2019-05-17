@@ -14,5 +14,13 @@
         public string Nome { get; private set; }
         public decimal Valor { get; private set; }
         public List<ProdutoServico> ProdutosServicos { get; private set; }
+
+        public void AdicionarTotalizador(ProdutoServico produtoServico)
+        {
+            if (ProdutosServicos == null)
+                ProdutosServicos = new List<ProdutoServico>();
+
+            ProdutosServicos.Add(produtoServico);
+        }
     }
 }

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BlocoX.Modelos.ReducaoZ
 {
-    public class PafEcf
+    public class Estabelecimento
     {
-        public string NumeroCredenciamento { get; set; }
+        public Estabelecimento(string ie) => Ie = ie;
+
+        public string Ie { get; private set; }
     }
 }

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BlocoX.Modelos</RootNamespace>
     <AssemblyName>BlocoX.Modelos</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,8 +46,8 @@
     <Compile Include="ReducaoZ\BlocoXRZ.cs" />
     <Compile Include="ReducaoZ\DadosReducaoZ.cs" />
     <Compile Include="ReducaoZ\Ecf.cs" />
-    <Compile Include="ReducaoZ\Estabelecimento.cs" />
-    <Compile Include="ReducaoZ\PafEcf.cs" />
+    <Compile Include="Estabelecimento.cs" />
+    <Compile Include="PafEcf.cs" />
     <Compile Include="ReducaoZ\ProdutoServico.cs" />
     <Compile Include="ReducaoZ\TotalizadorParcial.cs" />
   </ItemGroup>
