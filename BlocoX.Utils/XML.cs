@@ -70,7 +70,7 @@ namespace BlocoX.Utils
             return xml.StringToXml();
         }
 
-        public static XmlDocument BlocoXRZToString(this Modelos.ReducaoZ.BlocoXRZ blocoXRz)
+        public static XmlDocument BlocoXRZToXml(this Modelos.ReducaoZ.BlocoXRZ blocoXRz)
         {
             if (blocoXRz == null)
                 throw new System.ArgumentNullException(nameof(blocoXRz));

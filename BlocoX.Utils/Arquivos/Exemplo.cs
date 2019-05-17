@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
+using System.Xml;
 
 namespace BlocoX.Utils.Arquivos
 {
@@ -35,6 +36,6 @@ namespace BlocoX.Utils.Arquivos
 
         public string Json() => new JavaScriptSerializer().Serialize(BlocoXRz());
 
-        public string Xml() => BlocoXRz().BlocoXRZToXml();
+        public XmlDocument Xml() => BlocoXRz().BlocoXRZToXml();
     }
 }
