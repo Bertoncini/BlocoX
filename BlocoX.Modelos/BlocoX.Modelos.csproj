@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Estoque\BlocoXEstoque.cs" />
+    <Compile Include="Estoque\DadosEstoque.cs" />
+    <Compile Include="Estoque\Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReducaoZ\BlocoXRZ.cs" />
     <Compile Include="ReducaoZ\DadosReducaoZ.cs" />

@@ -27,12 +27,21 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-namespace BlocoX.Modelos
+namespace BlocoX.Modelos.Estoque
 {
-    public class PafEcf
-    {
-        public PafEcf(string numeroCredenciamento) => NumeroCredenciamento = numeroCredenciamento;
+    using BlocoX.Modelos;
 
-        public string NumeroCredenciamento { get; private set; }
+    public class BlocoXEstoque
+    {
+        public BlocoXEstoque(Estabelecimento estabelecimento, PafEcf pafEcf, DadosEstoque dadosEstoque)
+        {
+            Estabelecimento = estabelecimento;
+            PafEcf = pafEcf;
+            DadosEstoque = dadosEstoque;
+        }
+
+        public Estabelecimento Estabelecimento { get; private set; }
+        public PafEcf PafEcf { get; private set; }
+        public DadosEstoque DadosEstoque { get; private set; }
     }
 }

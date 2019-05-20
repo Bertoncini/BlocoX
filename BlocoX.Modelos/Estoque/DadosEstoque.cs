@@ -27,12 +27,22 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-namespace BlocoX.Modelos
+namespace BlocoX.Modelos.Estoque
 {
-    public class PafEcf
-    {
-        public PafEcf(string numeroCredenciamento) => NumeroCredenciamento = numeroCredenciamento;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
-        public string NumeroCredenciamento { get; private set; }
+    public class DadosEstoque
+    {
+        public DadosEstoque(DateTime dataReferencia, List<Produto> produtos)
+        {
+            DataReferencia = dataReferencia;
+            Produtos = produtos;
+        }
+
+        public DateTime DataReferencia { get; private set; }
+        public List<Produto> Produtos { get; private set; }
     }
 }

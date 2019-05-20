@@ -27,7 +27,7 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-namespace BlocoX.Modelos.ReducaoZ
+namespace BlocoX.Modelos
 {
     public class Estabelecimento
     {

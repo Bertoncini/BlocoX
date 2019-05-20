@@ -71,7 +71,7 @@ namespace BlocoX.AppTeste
 
         private MessageBoxResult mensagemConfrimacao(string mensagem) => MessageBox.Show(mensagem, "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly);
 
-        private void BtnConsultar_Click(object sender, RoutedEventArgs e)
+        private void btnRzConsultar_Click(object sender, RoutedEventArgs e)
         {
             var input = showInput("Consultar recibo", "Informe o número do Recibo a ser consultado:");
             if (string.IsNullOrWhiteSpace(input))
@@ -83,7 +83,7 @@ namespace BlocoX.AppTeste
             trataRetorno(servicos.Consultar(input));
         }
 
-        private void BtnSituacaoPafEcf_Click(object sender, RoutedEventArgs e)
+        private void btnRzSituacaoPafEcf_Click(object sender, RoutedEventArgs e)
         {
             var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
             if (string.IsNullOrWhiteSpace(input))
@@ -97,7 +97,7 @@ namespace BlocoX.AppTeste
             trataRetorno(servicos.ConsultarSituacaoPafEcf(xmlDoc.InnerXml));
         }
 
-        private void BtnValidar_Click(object sender, RoutedEventArgs e)
+        private void btnRzValidar_Click(object sender, RoutedEventArgs e)
         {
             var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
             if (string.IsNullOrWhiteSpace(input))
@@ -111,7 +111,7 @@ namespace BlocoX.AppTeste
             trataRetorno(servicos.Validar(xmlDoc.InnerXml));
         }
 
-        private void BtnEnviar_Click(object sender, RoutedEventArgs e)
+        private void btnRzEnviar_Click(object sender, RoutedEventArgs e)
         {
             var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
             var xmlDoc = new System.Xml.XmlDocument();
@@ -126,8 +126,73 @@ namespace BlocoX.AppTeste
                     return;
                 }
 
-                xmlDoc = new Utils.Arquivos.Exemplo().Xml();
+                xmlDoc = new Utils.Arquivos.Exemplo().RzXml();
                 xmlDoc.AssinarXML("ReducaoZ");
+
+            }
+            else
+                xmlDoc.Load(input);
+
+            trataRetorno(servicos.Enviar(xmlDoc.InnerXml));
+        }
+
+        private void btnEstConsultar_Click(object sender, RoutedEventArgs e)
+        {
+            var input = showInput("Consultar recibo", "Informe o número do Recibo a ser consultado:");
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                mensagemAviso("O número do recibo é obrigatório!");
+                return;
+            }
+
+            trataRetorno(servicos.Consultar(input));
+        }
+
+        private void btnEstSituacaoPafEcf_Click(object sender, RoutedEventArgs e)
+        {
+            var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                mensagemAviso("O arquivo XML é obrigatório!");
+                return;
+            }
+            var xmlDoc = new System.Xml.XmlDocument();
+            xmlDoc.Load(input);
+
+            trataRetorno(servicos.ConsultarSituacaoPafEcf(xmlDoc.InnerXml));
+        }
+
+        private void btnEstValidar_Click(object sender, RoutedEventArgs e)
+        {
+            var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                mensagemAviso("O arquivo XML é obrigatório!");
+                return;
+            }
+            var xmlDoc = new System.Xml.XmlDocument();
+            xmlDoc.Load(input);
+
+            trataRetorno(servicos.Validar(xmlDoc.InnerXml));
+        }
+
+        private void btnEstEnviar_Click(object sender, RoutedEventArgs e)
+        {
+            var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
+            var xmlDoc = new System.Xml.XmlDocument();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                if (mensagemConfrimacao("Não foi informado um XML, deseja enviar um default?") == MessageBoxResult.No)
+                    return;
+
+                if (string.IsNullOrWhiteSpace(txtLocalCertificado.Text) || string.IsNullOrWhiteSpace(txtSenhaCertificado.Text))
+                {
+                    mensagemAviso("Para enviar o arquivo default deve se informar o certificado para realizar a assinatura!");
+                    return;
+                }
+
+                xmlDoc = new Utils.Arquivos.Exemplo().EstoqueXml();
+                xmlDoc.AssinarXML("Estoque");
 
             }
             else
@@ -247,7 +312,7 @@ namespace BlocoX.AppTeste
             }
         }
 
-        private void BtnArqCertificado_Click(object sender, RoutedEventArgs e)
+        private void btnArqCertificado_Click(object sender, RoutedEventArgs e)
         {
             var input = selecionarArquivo("Selecionar Certificado", ".pdf", "Certificado (.pfx)|*.pfx");
             if (string.IsNullOrWhiteSpace(input))
@@ -261,9 +326,9 @@ namespace BlocoX.AppTeste
             Config.localSenhaCertificado = new System.Collections.Generic.KeyValuePair<string, string>(txtLocalCertificado.Text, txtSenhaCertificado.Text);
         }
 
-        private void TxtSenhaCertificado_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtSenhaCertificado_TextChanged(object sender, TextChangedEventArgs e)
         {
             Config.localSenhaCertificado = new System.Collections.Generic.KeyValuePair<string, string>(txtLocalCertificado.Text, txtSenhaCertificado.Text);
-        }
+        }        
     }
 }

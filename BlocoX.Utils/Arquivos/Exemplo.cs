@@ -39,7 +39,7 @@ namespace BlocoX.Utils.Arquivos
         public Modelos.ReducaoZ.BlocoXRZ BlocoXRz()
         {
             var produtoAliquota17 = new BlocoX.Modelos.ReducaoZ.ProdutoServico("PRODUTO ALIQUOTA 1700", "0", "1400300", "11041900", "220601", 2, "UN", 0M, 0M, 0M, 1000M, false);
-            var produtoAliquota12 = new BlocoX.Modelos.ReducaoZ.ProdutoServico("PRODUTO ALIQUOTA 1200", "0", "1400300", "11041900", "220601", 2, "UN", 0M, 0M, 0M, 1000M, false);
+            var produtoAliquota12 = new BlocoX.Modelos.ReducaoZ.ProdutoServico("PRODUTO ALIQUOTA 1200", "0", "1400300", "11041900", "220602", 2, "UN", 0M, 0M, 0M, 1000M, false);
             var servico = new BlocoX.Modelos.ReducaoZ.ProdutoServico("SERVICO ALIQUOTA 1700", "0", "1400300", "11041900", "220601", 2, "UN", 100M, 200M, 0M, 1000M, true);
 
             var totalizadorAliquota17 = new BlocoX.Modelos.ReducaoZ.TotalizadorParcial("01T1700", 2100.0M,
@@ -53,16 +53,34 @@ namespace BlocoX.Utils.Arquivos
             dadosRz.AdicionarTotalizador(totalizadorAliquota12);
 
             var blocoxRz = new BlocoX.Modelos.ReducaoZ.BlocoXRZ(
-                new Modelos.ReducaoZ.Estabelecimento("257477110"),
-                new Modelos.ReducaoZ.PafEcf("123456789012345"),
+                new Modelos.Estabelecimento("257477110"),
+                new Modelos.PafEcf("123456789012345"),
                 new Modelos.ReducaoZ.Ecf("UR010905000", dadosRz)
                 );
 
             return blocoxRz;
         }
 
-        public string Json() => new JavaScriptSerializer().Serialize(BlocoXRz());
+        public string RzJson() => new JavaScriptSerializer().Serialize(BlocoXRz());
 
-        public XmlDocument Xml() => BlocoXRz().BlocoXRZToXml();
+        public XmlDocument RzXml() => BlocoXRz().BlocoXRZToXml();
+
+        public Modelos.Estoque.BlocoXEstoque BlocoXEstoque()
+        {
+            var produtoAliquota17 = new BlocoX.Modelos.Estoque.Produto("PRODUTO ALIQUOTA 1700", "0", "1400300", "11041900", "220601", 100, 200, "UN", 1000M, 100000, 0, 0, 0, "Tributado pelo ICMS", 17M, false, "Terceiros", "Positivo");
+            var produtoAliquota12 = new BlocoX.Modelos.Estoque.Produto("PRODUTO ALIQUOTA 1200", "0", "1400300", "11041900", "220602", 100, 200, "UN", 1000M, 100000, 0, 0, 0, "Tributado pelo ICMS", 12M, false, "Terceiros", "Positivo");
+
+            var blocoxEstoque = new BlocoX.Modelos.Estoque.BlocoXEstoque(
+                new Modelos.Estabelecimento("257477110"),
+                new Modelos.PafEcf("123456789012345"),
+                new Modelos.Estoque.DadosEstoque(new DateTime(2019, 04, 01), new List<Modelos.Estoque.Produto> { produtoAliquota17, produtoAliquota12 })
+                );
+
+            return blocoxEstoque;
+        }
+
+        public string EstoqueJson() => new JavaScriptSerializer().Serialize(BlocoXEstoque());
+
+        public XmlDocument EstoqueXml() => BlocoXEstoque().BlocoXEstoqueToXml();
     }
 }

@@ -40,11 +40,11 @@
                                     <TextBlock Margin="3">Local Certificado:</TextBlock>
                                     <WrapPanel>
                                         <TextBox x:Name="txtLocalCertificado" Margin="3" Width="200"></TextBox>
-                                        <Button Margin="3" x:Name="btnArqCertificado" Click="BtnArqCertificado_Click">Arq. Certificado</Button>
+                                        <Button Margin="3" x:Name="btnArqCertificado" Click="btnArqCertificado_Click">Arq. Certificado</Button>
                                     </WrapPanel>
                                         <TextBlock Margin="3">Senha Certificado:</TextBlock>
                                         <WrapPanel>
-                                            <TextBox x:Name="txtSenhaCertificado" Margin="3" Width="200" TextChanged="TxtSenhaCertificado_TextChanged"></TextBox>
+                                            <TextBox x:Name="txtSenhaCertificado" Margin="3" Width="200" TextChanged="txtSenhaCertificado_TextChanged"></TextBox>
                                         </WrapPanel>
                                     </StackPanel>
                             </StackPanel>
@@ -132,14 +132,19 @@
             <StackPanel>
                 <GroupBox Header="ReduçãoZ">
                     <WrapPanel>
-                        <Button Margin="3" Width="100" x:Name="btnConsultar" Click="BtnConsultar_Click">Consultar</Button>
-                        <Button Margin="3" Width="100" x:Name="btnSituacaoPafEcf" Click="BtnSituacaoPafEcf_Click">Situação Paf Ecf</Button>
-                        <Button Margin="3" Width="100" x:Name="btnValidar" Click="BtnValidar_Click">Validar</Button>
-                        <Button Margin="3" Width="100" x:Name="btnEnviar" Click="BtnEnviar_Click">Enviar</Button>
+                        <Button Margin="3" Width="100" x:Name="btnRzConsultar" Click="btnRzConsultar_Click">Consultar</Button>
+                        <Button Margin="3" Width="100" x:Name="btnRzSituacaoPafEcf" Click="btnRzSituacaoPafEcf_Click">Situação Paf Ecf</Button>
+                        <Button Margin="3" Width="100" x:Name="btnRzValidar" Click="btnRzValidar_Click">Validar</Button>
+                        <Button Margin="3" Width="100" x:Name="btnRzEnviar" Click="btnRzEnviar_Click">Enviar</Button>
                     </WrapPanel>
                 </GroupBox>
                 <GroupBox Header="Estoque">
-                    
+                    <WrapPanel>
+                        <Button Margin="3" Width="100" x:Name="btnEstConsultar" Click="btnEstConsultar_Click">Consultar</Button>
+                        <Button Margin="3" Width="100" x:Name="btnEstSituacaoPafEcf" Click="btnEstSituacaoPafEcf_Click">Situação Paf Ecf</Button>
+                        <Button Margin="3" Width="100" x:Name="btnEstValidar" Click="btnEstValidar_Click">Validar</Button>
+                        <Button Margin="3" Width="100" x:Name="btnEstEnviar" Click="btnEstEnviar_Click">Enviar</Button>
+                    </WrapPanel>
                 </GroupBox>
             </StackPanel>
            

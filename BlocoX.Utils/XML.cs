@@ -34,7 +34,7 @@ namespace BlocoX.Utils
 
     public static class XML
     {
-        public static XmlDocument JsonToXml(this string json)
+        public static XmlDocument RzJsonToXml(this string json)
         {
             dynamic jsonObject = DynamicJsonConverter.ConvertToObject(json);
 
@@ -63,6 +63,33 @@ namespace BlocoX.Utils
                 </TotalizadoresParciais>
             </DadosReducaoZ>
         </Ecf>
+    </Mensagem>
+</ReducaoZ>
+";
+
+            return xml.StringToXml();
+        }
+
+        public static XmlDocument EstoqueJsonToXml(this string json)
+        {
+            dynamic jsonObject = DynamicJsonConverter.ConvertToObject(json);
+
+            var xml =
+          $@"<?xml version='1.0' encoding='UTF‐8'?>
+<ReducaoZ Versao='1.0'>
+    <Mensagem>
+        <Estabelecimento>
+            <Ie>{jsonObject.Estabelecimento.Ie}</Ie>
+        </Estabelecimento>
+        <PafEcf>
+            <NumeroCredenciamento>{jsonObject.PafEcf.NumeroCredenciamento}</NumeroCredenciamento>
+        </PafEcf>
+        <DadosEstoque>
+            <DataReferencia>{jsonObject.DadosEstoque.DataReferencia.ToString("yyyy-MM-dd")}</DataReferencia>
+            <Produtos>
+                {xmlStringBlocoXEstoqueProduto(jsonObject.DadosEstoque.Produtos)}
+            </Produtos>
+        </DadosEstoque>
     </Mensagem>
 </ReducaoZ>
 ";
@@ -102,6 +129,34 @@ namespace BlocoX.Utils
         </Ecf>
     </Mensagem>
 </ReducaoZ>
+";
+
+            return xml.StringToXml();
+        }
+
+        public static XmlDocument BlocoXEstoqueToXml(this Modelos.Estoque.BlocoXEstoque blocoXEstoque)
+        {
+            if (blocoXEstoque == null)
+                throw new System.ArgumentNullException(nameof(blocoXEstoque));
+
+            var xml =
+          $@"<?xml version='1.0' encoding='UTF‐8'?>
+<Estoque Versao='1.0'>
+    <Mensagem>
+        <Estabelecimento>
+            <Ie>{blocoXEstoque.Estabelecimento.Ie}</Ie>
+        </Estabelecimento>
+        <PafEcf>
+            <NumeroCredenciamento>{blocoXEstoque.PafEcf.NumeroCredenciamento}</NumeroCredenciamento>
+        </PafEcf>
+        <DadosEstoque>
+            <DataReferencia>{blocoXEstoque.DadosEstoque.DataReferencia.ToString("yyyy-MM-dd")}</DataReferencia>
+            <Produtos>
+                {xmlStringBlocoXEstoqueProduto(blocoXEstoque.DadosEstoque.Produtos)}
+            </Produtos>
+        </DadosEstoque>
+    </Mensagem>
+</Estoque>
 ";
 
             return xml.StringToXml();
@@ -202,6 +257,72 @@ namespace BlocoX.Utils
             <ValorAcrescimo>{produto.ValorAcrescimo.ToString("N2").Replace(".", "")}</ValorAcrescimo>
             <ValorCancelamento>{produto.ValorCancelamento.ToString("N2").Replace(".", "")}</ValorCancelamento>
             <ValorTotalLiquido>{produto.ValorTotalLiquido.ToString("N2").Replace(".", "")}</ValorTotalLiquido>
+        </Produto>
+";
+            }
+
+            return strProdutos;
+        }
+
+        private static string xmlStringBlocoXEstoqueProduto(List<dynamic> produtos)
+        {
+            var strProdutos = string.Empty;
+
+            foreach (var produto in produtos)
+            {
+                strProdutos = $@"
+        <Produto>
+            <Descricao>{produto.Descricao.Substring(produto.Descricao.LastIndexOf("#") + 1)}</Descricao>
+            <CodigoGTIN>{produto.CodigoGTIN}</CodigoGTIN>
+            <CodigoCEST>{produto.CodigoCEST}</CodigoCEST>
+            <CodigoNCMSH>{produto.NCM}</CodigoNCMSH>
+            <CodigoProprio>{produto.CodigoProprio}</CodigoProprio>
+            <Quantidade>{produto.Quantidade.ToString("N3").Replace(".", "")}</Quantidade>
+            <QuantidadeTotalAquisicao>{produto.QuantidadeTotalAquisicao.ToString("N3").Replace(".", "")}</Quantidade>
+            <Unidade>{produto.Unidade}</Unidade>
+            <ValorUnitario>{produto.ValorUnitario.ToString("N3").Replace(".", "")}</ValorUnitario>
+            <ValorTotalAquisicao>{produto.ValorTotalAquisicao.ToString("N2").Replace(".", "")}</ValorTotalAquisicao>
+            <ValorTotalICMSDebitoFornecedor>{produto.ValorTotalICMSDebitoFornecedor.ToString("N2").Replace(".", "")}</ValorTotalICMSDebitoFornecedor>
+            <ValorBaseCalculoICMSST>{produto.ValorBaseCalculoICMSST.ToString("N2").Replace(".", "")}</ValorBaseCalculoICMSST>
+            <ValorTotalICMSST>{produto.ValorTotalICMSST.ToString("N2").Replace(".", "")}</ValorTotalICMSST>
+            <SituacaoTributaria>{produto.SituacaoTributaria}</SituacaoTributaria>
+            <Aliquota>{produto.Aliquota.ToString("N2").Replace(".", "")}</Aliquota>
+            <IsArredondado>{produto.IsArredondado}</IsArredondado>
+            <Ippt>{produto.Ippt}</Ippt>
+            <SituacaoEstoque>{produto.SituacaoEstoque}</SituacaoEstoque>
+        </Produto>
+";
+            }
+
+            return strProdutos;
+        }
+
+        private static string xmlStringBlocoXEstoqueProduto(List<Modelos.Estoque.Produto> produtos)
+        {
+            var strProdutos = string.Empty;
+
+            foreach (var produto in produtos)
+            {
+                strProdutos = $@"
+        <Produto>
+            <Descricao>{produto.Descricao.Substring(produto.Descricao.LastIndexOf("#") + 1)}</Descricao>
+            <CodigoGTIN>{produto.CodigoGTIN}</CodigoGTIN>
+            <CodigoCEST>{produto.CodigoCEST}</CodigoCEST>
+            <CodigoNCMSH>{produto.NCM}</CodigoNCMSH>
+            <CodigoProprio>{produto.CodigoProprio}</CodigoProprio>
+            <Quantidade>{produto.Quantidade.ToString("N3").Replace(".", "")}</Quantidade>
+            <QuantidadeTotalAquisicao>{produto.QuantidadeTotalAquisicao.ToString("N3").Replace(".", "")}</QuantidadeTotalAquisicao>
+            <Unidade>{produto.Unidade}</Unidade>
+            <ValorUnitario>{produto.ValorUnitario.ToString("N3").Replace(".", "")}</ValorUnitario>
+            <ValorTotalAquisicao>{produto.ValorTotalAquisicao.ToString("N2").Replace(".", "")}</ValorTotalAquisicao>
+            <ValorTotalICMSDebitoFornecedor>{produto.ValorTotalICMSDebitoFornecedor.ToString("N2").Replace(".", "")}</ValorTotalICMSDebitoFornecedor>
+            <ValorBaseCalculoICMSST>{produto.ValorBaseCalculoICMSST.ToString("N2").Replace(".", "")}</ValorBaseCalculoICMSST>
+            <ValorTotalICMSST>{produto.ValorTotalICMSST.ToString("N2").Replace(".", "")}</ValorTotalICMSST>
+            <SituacaoTributaria>{produto.SituacaoTributaria}</SituacaoTributaria>
+            <Aliquota>{produto.Aliquota.ToString("N2").Replace(".", "")}</Aliquota>
+            <IsArredondado>{(produto.IsArredondado ? "true" : "false")}</IsArredondado>
+            <Ippt>{produto.Ippt}</Ippt>
+            <SituacaoEstoque>{produto.SituacaoEstoque}</SituacaoEstoque>
         </Produto>
 ";
             }
