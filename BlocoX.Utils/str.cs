@@ -27,6 +27,8 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
+using BlocoX.Utils.Enums;
+
 namespace BlocoX.Utils
 {
     public static class Str
@@ -35,26 +37,29 @@ namespace BlocoX.Utils
         /// Corta e completa a string de acordo com o tamanho e orientação passadas
         /// </summary>
         /// <param name="str">String a ser modificada</param>
-        /// <param name="tamanho">Tamanho final da string</param>
-        /// <param name="strCompletar">String a completa os espaços</param>
-        /// <param name="orientacao">Completa a esquerda ou direita</param>
+        /// <param name="quantidadeDeCasas">Tamanho final da string</param>
+        /// <param name="valorParaPreencher">String a completa os espaços</param>
+        /// <param name="alinhamento">Completa a esquerda ou direita</param>
         /// <returns>Nova string modificada</returns>
-        public static string CortaCompleta(this string str, int tamanho = 1, string strCompletar = null, eOrietacao orientacao = eOrietacao.Direita)
+        public static string CortaCompleta(this string str, int quantidadeDeCasas = 1, string valorParaPreencher = null, Alinhamento alinhamento = Alinhamento.Direita)
         {
-            str = str ?? string.Empty;
+            if (PreencherComEspacoEmBranco(valorParaPreencher))
+                return ObterTextoAlinhadoComEspacoEmBranco(alinhamento, str, quantidadeDeCasas);
 
-            if(string.IsNullOrWhiteSpace(strCompletar))
-                if(orientacao == eOrietacao.Esquerda)
-                    return str.PadLeft(tamanho);
-                else
-                    return str.PadRight(tamanho);
-            else
-            {
-                if(orientacao == eOrietacao.Esquerda)
-                    return str.PadLeft(tamanho).Substring(0, str.PadLeft(tamanho).Length - str.Length).Replace(" ", strCompletar) + str;
-                else
-                    return str + str.PadRight(tamanho).Substring(str.Length, str.PadRight(tamanho).Length - str.Length).Replace(" ", strCompletar);
-            }
+            return ObterTextoAlinhadoComEspacoEmBranco(alinhamento, str, quantidadeDeCasas).Replace(" ", valorParaPreencher);
+
         }
+
+        private static bool PreencherComEspacoEmBranco(string stringComplementar)
+            => string.IsNullOrWhiteSpace(stringComplementar);
+
+        private static string ObterTextoAlinhadoComEspacoEmBranco(Alinhamento alinhamento, string texto, int quantidadeDeCasas)
+        {
+            if (alinhamento == Alinhamento.Esquerda)
+                return texto.PadLeft(quantidadeDeCasas);
+
+            return texto.PadRight(quantidadeDeCasas);
+        }
+
     }
 }
