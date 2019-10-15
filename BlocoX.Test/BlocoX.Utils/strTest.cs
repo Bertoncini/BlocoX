@@ -41,7 +41,7 @@ namespace BlocoX.Test.BlocoX.Utils
         public void Deve_validar_Venda_bruta_diaria()
         {
             var numero = 10.00m;
-            Assert.AreEqual("00000000001000", numero.ToString("n2").Replace(",","").Replace(".","").CortaCompleta(14, "0", Alinhamento.Esquerda));
+            Assert.AreEqual("00000000001000", numero.ToString("n2").Replace(",", "").Replace(".", "").CortaCompleta(14, "0", Alinhamento.Esquerda));
         }
 
 
