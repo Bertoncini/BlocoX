@@ -47,6 +47,10 @@
     <Compile Include="Config.cs" />
     <Compile Include="DynamicJsonConverter.cs" />
     <Compile Include="Enums\Alinhamento.cs" />
+    <Compile Include="Utils\Utils.cs" />
+    <Compile Include="Xml\Tags\DadosReducaoZTag.cs" />
+    <Compile Include="Xml\Tags\EstabelecimentoTag.cs" />
+    <Compile Include="Xml\Tags\PafEcfTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="str.cs" />
     <Compile Include="XML.cs" />
