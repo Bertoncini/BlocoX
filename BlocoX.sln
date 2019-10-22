@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocoX.Utils", "BlocoX.Util
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocoX.Modelos", "BlocoX.Modelos\BlocoX.Modelos.csproj", "{875437FF-B761-4105-B2AC-59A6848B917D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlocoX.Test", "BlocoX.Test\BlocoX.Test.csproj", "{1BA1526B-96FC-4789-BDD7-292A5C69D466}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{875437FF-B761-4105-B2AC-59A6848B917D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{875437FF-B761-4105-B2AC-59A6848B917D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{875437FF-B761-4105-B2AC-59A6848B917D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BA1526B-96FC-4789-BDD7-292A5C69D466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BA1526B-96FC-4789-BDD7-292A5C69D466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BA1526B-96FC-4789-BDD7-292A5C69D466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BA1526B-96FC-4789-BDD7-292A5C69D466}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

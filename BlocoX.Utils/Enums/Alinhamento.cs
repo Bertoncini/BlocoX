@@ -27,39 +27,16 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using BlocoX.Utils.Enums;
-
-namespace BlocoX.Utils
+namespace BlocoX.Utils.Enums
 {
-    public static class Str
+    using System.ComponentModel;
+
+    public enum Alinhamento
     {
-        /// <summary>
-        /// Corta e completa a string de acordo com o tamanho e orientação passadas
-        /// </summary>
-        /// <param name="str">String a ser modificada</param>
-        /// <param name="quantidadeDeCasas">Tamanho final da string</param>
-        /// <param name="valorParaPreencher">String a completa os espaços</param>
-        /// <param name="alinhamento">Completa a esquerda ou direita</param>
-        /// <returns>Nova string modificada</returns>
-        public static string CortaCompleta(this string str, int quantidadeDeCasas = 1, string valorParaPreencher = null, Alinhamento alinhamento = Alinhamento.Direita)
-        {
-            if (PreencherComEspacoEmBranco(valorParaPreencher))
-                return ObterTextoAlinhadoComEspacoEmBranco(alinhamento, str, quantidadeDeCasas);
+        [Description("Esquerda")]
+        Esquerda = 0,
 
-            return ObterTextoAlinhadoComEspacoEmBranco(alinhamento, str, quantidadeDeCasas).Replace(" ", valorParaPreencher);
-
-        }
-
-        private static bool PreencherComEspacoEmBranco(string stringComplementar)
-            => string.IsNullOrWhiteSpace(stringComplementar);
-
-        private static string ObterTextoAlinhadoComEspacoEmBranco(Alinhamento alinhamento, string texto, int quantidadeDeCasas)
-        {
-            if (alinhamento == Alinhamento.Esquerda)
-                return texto.PadLeft(quantidadeDeCasas);
-
-            return texto.PadRight(quantidadeDeCasas);
-        }
-
+        [Description("Direita")]
+        Direita = 1
     }
 }

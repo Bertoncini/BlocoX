@@ -29,6 +29,7 @@
 /********************************************************************************/
 namespace BlocoX.Utils
 {
+    using BlocoX.Utils.Enums;
     using System.Collections.Generic;
     using System.Xml;
 
@@ -53,11 +54,11 @@ namespace BlocoX.Utils
             <DadosReducaoZ>
                 <DataReferencia>{jsonObject.Ecf.DadosReducaoZ.DataReferencia.ToString("yyyy-MM-dd")}</DataReferencia>
                 <DataHoraEmissao>{jsonObject.Ecf.DadosReducaoZ.DataHoraEmissao.ToString("yyyy-MM-ddTHH:mm:ss-03:00")}</DataHoraEmissao>
-                <CRZ>{jsonObject.Ecf.DadosReducaoZ.CRZ.ToString().CortaCompleta(4, "0", eOrietacao.Esquerda)}</CRZ>
-                <COO>{jsonObject.Ecf.DadosReducaoZ.COO.ToString().CortaCompleta(9, "0", eOrietacao.Esquerda)}</COO>
-                <CRO>{jsonObject.Ecf.DadosReducaoZ.CRO.ToString().CortaCompleta(3, "0", eOrietacao.Esquerda)}</CRO>
-                <VendaBrutaDiaria>{jsonObject.Ecf.DadosReducaoZ.VendaBrutaDiaria.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(14, "0", eOrietacao.Esquerda)}</VendaBrutaDiaria>
-                <GT>{jsonObject.Ecf.DadosReducaoZ.GT.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(18, "0", eOrietacao.Esquerda)}</GT>
+                <CRZ>{jsonObject.Ecf.DadosReducaoZ.CRZ.ToString().CortaCompleta(4, "0", Alinhamento.Esquerda)}</CRZ>
+                <COO>{jsonObject.Ecf.DadosReducaoZ.COO.ToString().CortaCompleta(9, "0", Alinhamento.Esquerda)}</COO>
+                <CRO>{jsonObject.Ecf.DadosReducaoZ.CRO.ToString().CortaCompleta(3, "0", Alinhamento.Esquerda)}</CRO>
+                <VendaBrutaDiaria>{jsonObject.Ecf.DadosReducaoZ.VendaBrutaDiaria.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(14, "0", Alinhamento.Esquerda)}</VendaBrutaDiaria>
+                <GT>{jsonObject.Ecf.DadosReducaoZ.GT.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(18, "0", Alinhamento.Esquerda)}</GT>
                 <TotalizadoresParciais>
                     {xmlStringBlocoXRzTotalizadorParcial(jsonObject.Ecf.DadosReducaoZ.TotalizadoresParciais)}
                 </TotalizadoresParciais>
@@ -117,11 +118,11 @@ namespace BlocoX.Utils
             <DadosReducaoZ>
                 <DataReferencia>{blocoXRz.Ecf.DadosReducaoZ.DataReferencia.ToString("yyyy-MM-dd")}</DataReferencia>
                 <DataHoraEmissao>{blocoXRz.Ecf.DadosReducaoZ.DataHoraEmissao.ToString("yyyy-MM-ddTHH:mm:ss-03:00")}</DataHoraEmissao>
-                <CRZ>{blocoXRz.Ecf.DadosReducaoZ.CRZ.ToString().CortaCompleta(4, "0", eOrietacao.Esquerda)}</CRZ>
-                <COO>{blocoXRz.Ecf.DadosReducaoZ.COO.ToString().CortaCompleta(9, "0", eOrietacao.Esquerda)}</COO>
-                <CRO>{blocoXRz.Ecf.DadosReducaoZ.CRO.ToString().CortaCompleta(3, "0", eOrietacao.Esquerda)}</CRO>
-                <VendaBrutaDiaria>{blocoXRz.Ecf.DadosReducaoZ.VendaBrutaDiaria.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(14, "0", eOrietacao.Esquerda)}</VendaBrutaDiaria>
-                <GT>{blocoXRz.Ecf.DadosReducaoZ.GT.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(18, "0", eOrietacao.Esquerda)}</GT>
+                <CRZ>{blocoXRz.Ecf.DadosReducaoZ.CRZ.ToString().CortaCompleta(4, "0", Alinhamento.Esquerda)}</CRZ>
+                <COO>{blocoXRz.Ecf.DadosReducaoZ.COO.ToString().CortaCompleta(9, "0", Alinhamento.Esquerda)}</COO>
+                <CRO>{blocoXRz.Ecf.DadosReducaoZ.CRO.ToString().CortaCompleta(3, "0", Alinhamento.Esquerda)}</CRO>
+                <VendaBrutaDiaria>{blocoXRz.Ecf.DadosReducaoZ.VendaBrutaDiaria.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(14, "0", Alinhamento.Esquerda)}</VendaBrutaDiaria>
+                <GT>{blocoXRz.Ecf.DadosReducaoZ.GT.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(18, "0", Alinhamento.Esquerda)}</GT>
                 <TotalizadoresParciais>
                     {xmlStringBlocoXRzTotalizadorParcial(blocoXRz.Ecf.DadosReducaoZ.TotalizadoresParciais)}
                 </TotalizadoresParciais>

@@ -46,7 +46,7 @@
     <Compile Include="Arquivos\Exemplo.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DynamicJsonConverter.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="Enums\Alinhamento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="str.cs" />
     <Compile Include="XML.cs" />
