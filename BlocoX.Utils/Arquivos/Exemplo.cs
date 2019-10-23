@@ -38,7 +38,7 @@ namespace BlocoX.Utils.Arquivos
 
     public class Exemplo
     {
-        public string BlocoXRz()
+        public XmlDocument BlocoXRz()
         {
             //TOOD Implementar servico
 
@@ -56,7 +56,7 @@ namespace BlocoX.Utils.Arquivos
                                     new Modelos.PafEcf("123456789012345"),
                                     reducaoz);
 
-            return xml.ObterXML().InnerXml;
+            return xml.ObterXML();
         }
 
         private TotalizadorParcial ObterTotalizadorAliquota17()
