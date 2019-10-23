@@ -47,13 +47,18 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlocoX.Utils\Xml\Tags\DadosReducaoZTagTest.cs" />
-    <Compile Include="BlocoX.Utils\Xml\Tags\EstabelecimentoTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\ReducaoZ\Tags\DadosReducaoZTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\EstabelecimentoTagTest.cs" />
     <Compile Include="BlocoX.Utils\Fakes\Informacoes.cs" />
     <Compile Include="BlocoX.Utils\strTest.cs" />
-    <Compile Include="BlocoX.Utils\Xml\Tags\PafEcfTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\PafEcfTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\ReducaoZ\Tags\EcfTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\ReducaoZ\Tags\ProdutosServicosTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\ReducaoZ\Tags\TotalizadoresTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\XMLBlocoXTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
