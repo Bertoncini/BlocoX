@@ -27,19 +27,22 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
+using System.Collections.Generic;
+
 namespace BlocoX.Modelos.ReducaoZ
 {
     public class BlocoXRZ
     {
-        public BlocoXRZ(Estabelecimento estabelecimento, PafEcf pafEcf, Ecf ecf)
+        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
         {
-            Estabelecimento = estabelecimento;
-            PafEcf = pafEcf;
             Ecf = ecf;
+            DadosReducaoZ = dadosReducaoZ;
+            TotalizadoresParciais = totalizadoresParciais;
         }
 
-        public Estabelecimento Estabelecimento { get; private set; }
-        public PafEcf PafEcf { get; private set; }
         public Ecf Ecf { get; private set; }
+        public DadosReducaoZ DadosReducaoZ { get; private set; }
+        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+
     }
 }
