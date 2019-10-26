@@ -27,22 +27,46 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+using BlocoX.Modelos;
+using System.Text;
+
+namespace BlocoX.Utils.Xml
 {
-    public class BlocoXRZ
+    public class HeaderXML
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        private Estabelecimento Estabelecimento { get; set; }
+        private PafEcf PafEcf { get; set; }
+        private StringBuilder _tag;
+
+        public HeaderXML(Estabelecimento estabelecimento, PafEcf pafEcf)
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            Estabelecimento = estabelecimento;
+            PafEcf = pafEcf;
         }
 
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+        public StringBuilder ObterTag()
+        {
+            _tag = new StringBuilder();
+
+            ObterTagEstabelecimento();
+            ObterTagPafECF();
+
+            return _tag;
+        }
+
+
+        private void ObterTagEstabelecimento()
+        {
+            var estabelecimento = new EstabelecimentoTag(Estabelecimento);
+            _tag.Append(estabelecimento.ObterTag());
+        }
+
+        private void ObterTagPafECF()
+        {
+            var pafECF = new PafEcfTag(PafEcf);
+            _tag.Append(pafECF.ObterTag());
+        }
 
     }
 }

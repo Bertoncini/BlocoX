@@ -27,22 +27,49 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+using BlocoX.Modelos.ReducaoZ;
+using System.Text;
+
+namespace BlocoX.Utils.Xml.ReducaoZ.Tags
 {
-    public class BlocoXRZ
+    public class DadosReducaoZTag
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        private DadosReducaoZ DadosReducaoZ { get; set; }
+        private StringBuilder _tag;
+
+        public DadosReducaoZTag(DadosReducaoZ dadosReducaoZ)
+            => DadosReducaoZ = dadosReducaoZ;
+
+        public StringBuilder ObterTag()
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            _tag = new StringBuilder();
+
+            ObterTagDataReferencia();
+            ObterTagDataHoraEmissao();
+            ObterTagCRZ();
+            ObterTagCOO();
+            ObterTagCRO();
+            ObterTagVendaBrutaDiaria();
+            ObterTagGT();
+
+            return _tag;
         }
 
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+        private void ObterTagDataReferencia()
+            => _tag.Append($"<DataReferencia>{DadosReducaoZ.DataReferencia.ToString("yyyy-MM-dd")}</DataReferencia>");
+        private void ObterTagDataHoraEmissao()
+             => _tag.Append($"<DataHoraEmissao>{DadosReducaoZ.DataHoraEmissao.ToString("yyyy-MM-ddTHH:mm:ss")}</DataHoraEmissao>");
+        private void ObterTagCRZ()
+            => _tag.Append($"<CRZ>{DadosReducaoZ.CRZ.ToString().CortaCompleta(4, "0")}</CRZ>");
+        private void ObterTagCOO()
+            => _tag.Append($"<COO>{DadosReducaoZ.COO.ToString().CortaCompleta(9, "0")}</COO>");
+        private void ObterTagCRO()
+            => _tag.Append($"<CRO>{DadosReducaoZ.CRO.ToString().CortaCompleta(3, "0")}</CRO>");
+        private void ObterTagVendaBrutaDiaria()
+            => _tag.Append($"<VendaBrutaDiaria>{DadosReducaoZ.VendaBrutaDiaria.DecimalParaStringSemPonto().CortaCompleta(14, "0")}</VendaBrutaDiaria>");
+        private void ObterTagGT()
+            => _tag.Append($"<GT>{DadosReducaoZ.GT.DecimalParaStringSemPonto().CortaCompleta(18, "0")}</GT>");
 
     }
 }

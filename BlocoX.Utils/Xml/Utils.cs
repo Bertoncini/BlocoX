@@ -27,22 +27,21 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+namespace BlocoX.Utils.Xml
 {
-    public class BlocoXRZ
+    public static class Utils
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        public static string DecimalParaStringSemPonto(this decimal valor)
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            var stringValor = valor.ToString("n2");
+            stringValor = stringValor.Replace(",", "");
+            stringValor = stringValor.Replace(".", "");
+            return stringValor;
         }
 
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+        public static string Decimais(this decimal valor, int quantidadeCasas = 2)
+            => valor.ToString($"n{quantidadeCasas}").Replace(".", "");
 
     }
 }

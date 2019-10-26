@@ -27,22 +27,65 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+using BlocoX.Modelos;
+using BlocoX.Utils.Xml.Interfaces;
+using System.Text;
+using System.Xml;
+
+namespace BlocoX.Utils.Xml
 {
-    public class BlocoXRZ
+    public class XMLBlocoX
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        private Estabelecimento Estabelecimento { get; set; }
+        private PafEcf PafEcf { get; set; }
+        private IBlocoX BlocoX { get; set; }
+        private StringBuilder _tag;
+
+        public XMLBlocoX(Estabelecimento estabelecimento, PafEcf pafEcf, IBlocoX blocoX)
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            Estabelecimento = estabelecimento;
+            PafEcf = pafEcf;
+            BlocoX = blocoX;
         }
 
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+        public XmlDocument ObterXML()
+        {
+            var xml = new XmlDocument();
+            xml.LoadXml(ObterTag().ToString());
 
+            return xml;
+        }
+
+        public StringBuilder ObterTag()
+        {
+            _tag = new StringBuilder();
+
+            _tag.Append(@"<?xml version=""1.0"" encoding=""utf-8""?>");
+            _tag.Append(@"<ReducaoZ Versao=""1.0"">");
+            ObterTagAberturaMensagem();
+            ObterTagHeader();
+            ObterTagBody();
+            ObterTagFechamentoMensagem();
+            _tag.Append("</ReducaoZ>");
+
+            return _tag;
+        }
+
+        private void ObterTagAberturaMensagem()
+            => _tag.Append("<Mensagem>");
+
+        private void ObterTagHeader()
+        {
+            var header = new HeaderXML(Estabelecimento, PafEcf);
+            _tag.Append(header.ObterTag());
+
+        }
+
+        private void ObterTagBody()
+            => _tag.Append(BlocoX.ObterTag());
+
+        private void ObterTagFechamentoMensagem()
+            => _tag.Append("</Mensagem>");
     }
 }

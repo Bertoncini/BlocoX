@@ -29,6 +29,8 @@
 /********************************************************************************/
 namespace BlocoX.Utils.Arquivos
 {
+    using BlocoX.Modelos.ReducaoZ;
+    using BlocoX.Utils.Xml;
     using System;
     using System.Collections.Generic;
     using System.Web.Script.Serialization;
@@ -36,34 +38,41 @@ namespace BlocoX.Utils.Arquivos
 
     public class Exemplo
     {
-        public Modelos.ReducaoZ.BlocoXRZ BlocoXRz()
+        public XmlDocument BlocoXRz()
         {
-            var produtoAliquota17 = new BlocoX.Modelos.ReducaoZ.ProdutoServico("PRODUTO ALIQUOTA 1700", "0", "1400300", "11041900", "220601", 2, "UN", 0M, 0M, 0M, 1000M, false);
-            var produtoAliquota12 = new BlocoX.Modelos.ReducaoZ.ProdutoServico("PRODUTO ALIQUOTA 1200", "0", "1400300", "11041900", "220602", 2, "UN", 0M, 0M, 0M, 1000M, false);
-            var servico = new BlocoX.Modelos.ReducaoZ.ProdutoServico("SERVICO ALIQUOTA 1700", "0", "1400300", "11041900", "220601", 2, "UN", 100M, 200M, 0M, 1000M, true);
+            //TOOD Implementar servico
 
-            var totalizadorAliquota17 = new BlocoX.Modelos.ReducaoZ.TotalizadorParcial("01T1700", 2100.0M,
-                new List<Modelos.ReducaoZ.ProdutoServico>() { produtoAliquota17, servico });
+            var dadosRz = new DadosReducaoZ(DateTime.Now, DateTime.Now, 1, 10, 1, 10, 20);
 
-            var totalizadorAliquota12 = new BlocoX.Modelos.ReducaoZ.TotalizadorParcial("01T1200", 1000.0M,
-               new List<Modelos.ReducaoZ.ProdutoServico>() { produtoAliquota12 });
+            var listaTotalizadores = new List<TotalizadorParcial>() { ObterTotalizadorAliquota17(), ObterTotalizadorAliquota12() };
 
-            var dadosRz = new BlocoX.Modelos.ReducaoZ.DadosReducaoZ(DateTime.Now, DateTime.Now, 1, 10, 1, 10, 20, new List<Modelos.ReducaoZ.TotalizadorParcial>());
-            dadosRz.AdicionarTotalizador(totalizadorAliquota17);
-            dadosRz.AdicionarTotalizador(totalizadorAliquota12);
+            var blocoxRz = new BlocoXRZ(new Modelos.ReducaoZ.Ecf("UR010905000"),
+                                                                dadosRz,
+                                                                listaTotalizadores);
 
-            var blocoxRz = new BlocoX.Modelos.ReducaoZ.BlocoXRZ(
-                new Modelos.Estabelecimento("257477110"),
-                new Modelos.PafEcf("123456789012345"),
-                new Modelos.ReducaoZ.Ecf("UR010905000", dadosRz)
-                );
+            var reducaoz = new XmlReducaoZ(blocoxRz);
 
-            return blocoxRz;
+            var xml = new XMLBlocoX(new Modelos.Estabelecimento("257477110"),
+                                    new Modelos.PafEcf("123456789012345"),
+                                    reducaoz);
+
+            return xml.ObterXML();
         }
 
-        public string RzJson() => new JavaScriptSerializer().Serialize(BlocoXRz());
+        private TotalizadorParcial ObterTotalizadorAliquota17()
+            => new TotalizadorParcial("01T1700", 2100.0M, new List<ProdutoServico>() { ObterProdutoAliquota17() });
 
-        public XmlDocument RzXml() => BlocoXRz().BlocoXRZToXml();
+        private TotalizadorParcial ObterTotalizadorAliquota12()
+            => new TotalizadorParcial("01T1200", 1000.0M, new List<Modelos.ReducaoZ.ProdutoServico>() { ObterProdutoAliquota12() });
+
+        private ProdutoServico ObterProdutoAliquota17()
+            => new ProdutoServico("PRODUTO ALIQUOTA 1700", "0", "1400300", "11041900", "220601", 2, "UN", 0M, 0M, 0M, 1000M, false);
+
+        private ProdutoServico ObterProdutoAliquota12()
+            => new ProdutoServico("PRODUTO ALIQUOTA 1200", "0", "1400300", "11041900", "220602", 2, "UN", 0M, 0M, 0M, 1000M, false);
+
+
+        public string RzJson() => new JavaScriptSerializer().Serialize(BlocoXRz());
 
         public Modelos.Estoque.BlocoXEstoque BlocoXEstoque()
         {

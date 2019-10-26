@@ -47,15 +47,29 @@
     <Compile Include="Config.cs" />
     <Compile Include="DynamicJsonConverter.cs" />
     <Compile Include="Enums\Alinhamento.cs" />
+    <Compile Include="Xml\Interfaces\IBlocoX.cs" />
+    <Compile Include="Xml\Utils.cs" />
+    <Compile Include="Xml\ReducaoZ\Tags\EcfTag.cs" />
+    <Compile Include="Xml\HeaderXML.cs" />
+    <Compile Include="Xml\ReducaoZ\Tags\DadosReducaoZTag.cs" />
+    <Compile Include="Xml\EstabelecimentoTag.cs" />
+    <Compile Include="Xml\PafEcfTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="str.cs" />
     <Compile Include="XML.cs" />
+    <Compile Include="Xml\ReducaoZ\Tags\ProdutosServicosTag.cs" />
+    <Compile Include="Xml\ReducaoZ\Tags\TotalizadoresTag.cs" />
+    <Compile Include="Xml\ReducaoZ\XmlReducaoZ.cs" />
+    <Compile Include="Xml\XMLBlocoX.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlocoX.Modelos\BlocoX.Modelos.csproj">
       <Project>{875437ff-b761-4105-b2ac-59a6848b917d}</Project>
       <Name>BlocoX.Modelos</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Xml\Estoque\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

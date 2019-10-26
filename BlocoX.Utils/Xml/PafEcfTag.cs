@@ -27,22 +27,38 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+using BlocoX.Modelos;
+using System.Text;
+
+namespace BlocoX.Utils.Xml
 {
-    public class BlocoXRZ
+    public class PafEcfTag
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        private PafEcf PafEcf { get; set; }
+        private StringBuilder _tag;
+
+        public PafEcfTag(PafEcf pafEcf)
+            => PafEcf = pafEcf;
+
+        public StringBuilder ObterTag()
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            _tag = new StringBuilder();
+
+            ObterTagAberturaPafEcf();
+            ObterTagNumeroCredenciamento();
+            ObterTagFechamentoPafECF();
+
+            return _tag;
         }
 
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+        private void ObterTagAberturaPafEcf()
+            => _tag.Append("<PafEcf>");
 
+        private void ObterTagNumeroCredenciamento()
+            => _tag.Append($"<NumeroCredenciamento>{PafEcf.NumeroCredenciamento}</NumeroCredenciamento>");
+
+        private void ObterTagFechamentoPafECF()
+            => _tag.Append("</PafEcf>");
     }
 }

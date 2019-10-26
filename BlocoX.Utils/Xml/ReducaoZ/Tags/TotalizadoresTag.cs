@@ -27,22 +27,50 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+using BlocoX.Modelos.ReducaoZ;
+using BlocoX.Utils.Xml.ReducaoZ.Tags;
+using System.Text;
+
+namespace BlocoX.Utils.Xml.Reducaoz.Tags
 {
-    public class BlocoXRZ
+    public class TotalizadoresTag
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        private TotalizadorParcial TotalizadorParcial { get; set; }
+        private StringBuilder _tag;
+
+        public TotalizadoresTag(TotalizadorParcial totalizadorParcial)
+            => TotalizadorParcial = totalizadorParcial;
+
+        public StringBuilder ObterTag()
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            _tag = new StringBuilder();
+
+            ObterTagAberturaTotalizadorParcial();
+            ObterTagNome();
+            ObterTagValor();
+            ObterTagProdutos();
+            ObterTagFechamentoTotalizadorParcial();
+
+            return _tag;
         }
 
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+        private void ObterTagAberturaTotalizadorParcial()
+            => _tag.Append("<TotalizadorParcial>");
 
+        private void ObterTagNome()
+            => _tag.Append($"<Nome>{TotalizadorParcial.Nome}</Nome>");
+
+        private void ObterTagValor()
+            => _tag.Append($"<Valor>{TotalizadorParcial.Valor.Decimais()}</Valor>");
+
+        private void ObterTagProdutos()
+        {
+            var tagProdutosServico = new ProdutosServicosTag(TotalizadorParcial.ProdutosServicos);
+            _tag.Append(tagProdutosServico.ObterTag());
+        }
+
+        private void ObterTagFechamentoTotalizadorParcial()
+           => _tag.Append("</TotalizadorParcial>");
     }
 }

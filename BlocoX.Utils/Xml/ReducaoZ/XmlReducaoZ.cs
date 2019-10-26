@@ -27,22 +27,82 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+using BlocoX.Modelos.ReducaoZ;
+using BlocoX.Utils.Xml.Interfaces;
+using BlocoX.Utils.Xml.Reducaoz.Tags;
+using BlocoX.Utils.Xml.ReducaoZ.Tags;
+using System.Text;
+
+namespace BlocoX.Utils.Xml
 {
-    public class BlocoXRZ
+    public class XmlReducaoZ : IBlocoX
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        private BlocoXRZ ReducaoZ { get; set; }
+        private StringBuilder _tag;
+
+        public XmlReducaoZ(BlocoXRZ reducaoZ)
+            => ReducaoZ = reducaoZ;
+
+        public StringBuilder ObterTag()
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            _tag = new StringBuilder();
+
+            ObterTagAberturaECF();
+
+            ObterTagECF();
+
+            ObterTagAberturaDadosReducaoZ();
+
+            ObterTagDadosReducaoZ();
+            ObterTagTotalizadores();
+
+            ObterTagFechamentoDadosReducaoZ();
+
+            ObterTagFechamentoECF();
+
+            return _tag;
         }
 
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+        private void ObterTagAberturaECF()
+            => _tag.Append("<Ecf>");
 
+        private void ObterTagAberturaDadosReducaoZ()
+            => _tag.Append("<DadosReducaoZ>");
+
+        private void ObterTagECF()
+        {
+            var ecf = new EcfTag(ReducaoZ.Ecf);
+            _tag.Append(ecf.ObterTag());
+
+        }
+
+        private void ObterTagDadosReducaoZ()
+        {
+            var dadosReducaoZ = new DadosReducaoZTag(ReducaoZ.DadosReducaoZ);
+            _tag.Append(dadosReducaoZ.ObterTag());
+
+        }
+
+        private void ObterTagTotalizadores()
+        {
+            _tag.Append("<TotalizadoresParciais>");
+
+            foreach (var totalizador in ReducaoZ.TotalizadoresParciais)
+            {
+                var totalizadorTag = new TotalizadoresTag(totalizador);
+                _tag.Append(totalizadorTag.ObterTag());
+
+            }
+
+            _tag.Append("</TotalizadoresParciais>");
+
+        }
+
+        private void ObterTagFechamentoDadosReducaoZ()
+            => _tag.Append("</DadosReducaoZ>");
+
+        private void ObterTagFechamentoECF()
+          => _tag.Append("</Ecf>");
     }
 }

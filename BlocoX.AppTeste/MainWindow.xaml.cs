@@ -126,7 +126,7 @@ namespace BlocoX.AppTeste
                     return;
                 }
 
-                xmlDoc = new Utils.Arquivos.Exemplo().RzXml();
+                xmlDoc = new Utils.Arquivos.Exemplo().BlocoXRz();
                 xmlDoc.AssinarXML("ReducaoZ");
 
             }

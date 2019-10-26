@@ -41,7 +41,7 @@ namespace BlocoX.Utils
         /// <param name="valorParaPreencher">String a completa os espaços</param>
         /// <param name="alinhamento">Completa a esquerda ou direita</param>
         /// <returns>Nova string modificada</returns>
-        public static string CortaCompleta(this string str, int quantidadeDeCasas = 1, string valorParaPreencher = null, Alinhamento alinhamento = Alinhamento.Direita)
+        public static string CortaCompleta(this string str, int quantidadeDeCasas = 1, string valorParaPreencher = null, Alinhamento alinhamento = Alinhamento.Esquerda)
         {
             if (PreencherComEspacoEmBranco(valorParaPreencher))
                 return ObterTextoAlinhadoComEspacoEmBranco(alinhamento, str, quantidadeDeCasas);

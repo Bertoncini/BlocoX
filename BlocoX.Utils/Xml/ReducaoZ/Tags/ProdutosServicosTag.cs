@@ -27,22 +27,64 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+using BlocoX.Modelos.ReducaoZ;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BlocoX.Utils.Xml.ReducaoZ.Tags
 {
-    public class BlocoXRZ
+    public class ProdutosServicosTag
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        private List<ProdutoServico> ListaDeProdutos { get; set; }
+        private StringBuilder _tag;
+
+        public ProdutosServicosTag(List<ProdutoServico> listaDeProdutos)
+            => ListaDeProdutos = listaDeProdutos;
+
+        public StringBuilder ObterTag()
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            _tag = new StringBuilder();
+
+            _tag.Append("<ProdutosServicos>");
+            ObterTagProdutos();
+            _tag.Append("</ProdutosServicos>");
+
+            return _tag;
         }
 
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+        private void ObterTagProdutos()
+        {
+            foreach (var Produto in ListaDeProdutos)
+            {
 
+                _tag.Append("<Produto>");
+
+                _tag.Append($"<Descricao>{Produto.Descricao.Substring(Produto.Descricao.LastIndexOf("#") + 1)}</Descricao>");
+
+                _tag.Append($"<CodigoGTIN></CodigoGTIN>");
+
+                _tag.Append($"<CodigoCEST>{Produto.CodigoCEST}</CodigoCEST>");
+
+                _tag.Append($"<CodigoNCMSH>{Produto.NCM}</CodigoNCMSH>");
+
+                _tag.Append($"<CodigoProprio>{Produto.CodigoProprio}</CodigoProprio>");
+
+                _tag.Append($"<Quantidade>{Produto.Quantidade.Decimais(3)}</Quantidade>");
+
+                _tag.Append($"<Unidade>{Produto.Unidade}</Unidade>");
+
+                _tag.Append($"<ValorDesconto>{Produto.ValorDesconto.Decimais()}</ValorDesconto>");
+
+                _tag.Append($"<ValorAcrescimo>{Produto.ValorAcrescimo.Decimais()}</ValorAcrescimo>");
+
+                _tag.Append($"<ValorCancelamento>{Produto.ValorCancelamento.Decimais()}</ValorCancelamento>");
+
+                _tag.Append($"<ValorTotalLiquido>{Produto.ValorTotalLiquido.Decimais()}</ValorTotalLiquido>");
+
+                _tag.Append("</Produto>");
+
+            }
+        }
     }
 }

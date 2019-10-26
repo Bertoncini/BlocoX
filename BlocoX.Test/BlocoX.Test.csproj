@@ -47,20 +47,34 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlocoX.Utils\Xml\ReducaoZ\Tags\DadosReducaoZTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\EstabelecimentoTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Fakes\Informacoes.cs" />
     <Compile Include="BlocoX.Utils\strTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\PafEcfTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\ReducaoZ\Tags\EcfTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\ReducaoZ\Tags\ProdutosServicosTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\ReducaoZ\Tags\TotalizadoresTagTest.cs" />
+    <Compile Include="BlocoX.Utils\Xml\XMLBlocoXTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlocoX.Modelos\BlocoX.Modelos.csproj">
+      <Project>{875437FF-B761-4105-B2AC-59A6848B917D}</Project>
+      <Name>BlocoX.Modelos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlocoX.Utils\BlocoX.Utils.csproj">
       <Project>{a4e1f0f4-ba8d-4adf-8163-44128a5c974b}</Project>
       <Name>BlocoX.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

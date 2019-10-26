@@ -98,43 +98,6 @@ namespace BlocoX.Utils
             return xml.StringToXml();
         }
 
-        public static XmlDocument BlocoXRZToXml(this Modelos.ReducaoZ.BlocoXRZ blocoXRz)
-        {
-            if (blocoXRz == null)
-                throw new System.ArgumentNullException(nameof(blocoXRz));
-
-            var xml =
-          $@"<?xml version='1.0' encoding='UTF‐8'?>
-<ReducaoZ Versao='1.0'>
-    <Mensagem>
-        <Estabelecimento>
-            <Ie>{blocoXRz.Estabelecimento.Ie}</Ie>
-        </Estabelecimento>
-        <PafEcf>
-            <NumeroCredenciamento>{blocoXRz.PafEcf.NumeroCredenciamento}</NumeroCredenciamento>
-        </PafEcf>
-        <Ecf>
-            <NumeroFabricacao>{blocoXRz.Ecf.NumeroFabricacao}</NumeroFabricacao>
-            <DadosReducaoZ>
-                <DataReferencia>{blocoXRz.Ecf.DadosReducaoZ.DataReferencia.ToString("yyyy-MM-dd")}</DataReferencia>
-                <DataHoraEmissao>{blocoXRz.Ecf.DadosReducaoZ.DataHoraEmissao.ToString("yyyy-MM-ddTHH:mm:ss-03:00")}</DataHoraEmissao>
-                <CRZ>{blocoXRz.Ecf.DadosReducaoZ.CRZ.ToString().CortaCompleta(4, "0", Alinhamento.Esquerda)}</CRZ>
-                <COO>{blocoXRz.Ecf.DadosReducaoZ.COO.ToString().CortaCompleta(9, "0", Alinhamento.Esquerda)}</COO>
-                <CRO>{blocoXRz.Ecf.DadosReducaoZ.CRO.ToString().CortaCompleta(3, "0", Alinhamento.Esquerda)}</CRO>
-                <VendaBrutaDiaria>{blocoXRz.Ecf.DadosReducaoZ.VendaBrutaDiaria.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(14, "0", Alinhamento.Esquerda)}</VendaBrutaDiaria>
-                <GT>{blocoXRz.Ecf.DadosReducaoZ.GT.ToString("N2").Replace(",", "").Replace(".", "").CortaCompleta(18, "0", Alinhamento.Esquerda)}</GT>
-                <TotalizadoresParciais>
-                    {xmlStringBlocoXRzTotalizadorParcial(blocoXRz.Ecf.DadosReducaoZ.TotalizadoresParciais)}
-                </TotalizadoresParciais>
-            </DadosReducaoZ>
-        </Ecf>
-    </Mensagem>
-</ReducaoZ>
-";
-
-            return xml.StringToXml();
-        }
-
         public static XmlDocument BlocoXEstoqueToXml(this Modelos.Estoque.BlocoXEstoque blocoXEstoque)
         {
             if (blocoXEstoque == null)
@@ -163,8 +126,6 @@ namespace BlocoX.Utils
             return xml.StringToXml();
         }
 
-        public static string XmlToString(this XmlDocument document) => document.InnerXml.Replace("&gt;", "<").Replace("&lt;", ">");
-
         public static XmlDocument StringToXml(this string xmlString)
         {
             var xml = new XmlDocument();
@@ -175,7 +136,7 @@ namespace BlocoX.Utils
 
         private static string xmlStringBlocoXRzTotalizadorParcial(List<dynamic> totalizadores)
         {
-            var rzTotalizadoresParciais = string.Empty;
+               var rzTotalizadoresParciais = string.Empty;
 
             foreach (var totalizador in totalizadores)
             {

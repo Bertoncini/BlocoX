@@ -34,7 +34,7 @@ namespace BlocoX.Modelos.ReducaoZ
 
     public class DadosReducaoZ
     {
-        public DadosReducaoZ(DateTime dataReferencia, DateTime dataHoraEmissao, int cRZ, int cOO, int cRO, decimal vendaBrutaDiaria, decimal gT, List<TotalizadorParcial> totalizadoresParciais)
+        public DadosReducaoZ(DateTime dataReferencia, DateTime dataHoraEmissao, int cRZ, int cOO, int cRO, decimal vendaBrutaDiaria, decimal gT)
         {
             DataReferencia = dataReferencia;
             DataHoraEmissao = dataHoraEmissao;
@@ -43,7 +43,6 @@ namespace BlocoX.Modelos.ReducaoZ
             CRO = cRO;
             VendaBrutaDiaria = vendaBrutaDiaria;
             GT = gT;
-            TotalizadoresParciais = totalizadoresParciais;
         }
 
         public DateTime DataReferencia { get; private set; }
@@ -53,14 +52,6 @@ namespace BlocoX.Modelos.ReducaoZ
         public int CRO { get; private set; }
         public decimal VendaBrutaDiaria { get; private set; }
         public decimal GT { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
 
-        public void AdicionarTotalizador(TotalizadorParcial totalizador)
-        {
-            if (TotalizadoresParciais == null)
-                TotalizadoresParciais = new List<TotalizadorParcial>();
-
-            TotalizadoresParciais.Add(totalizador);
-        }
     }
 }

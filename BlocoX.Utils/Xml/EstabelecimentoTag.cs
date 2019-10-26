@@ -27,22 +27,39 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+using BlocoX.Modelos;
+using System.Text;
+
+namespace BlocoX.Utils.Xml
 {
-    public class BlocoXRZ
+    public class EstabelecimentoTag
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        private Estabelecimento Estabelecimento { get; set; }
+        private StringBuilder _tag;
+
+        public EstabelecimentoTag(Estabelecimento estabelecimento)
+            => Estabelecimento = estabelecimento;
+
+        public StringBuilder ObterTag()
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            _tag = new StringBuilder();
+
+            ObterTagAberturaEstablecimento();
+            ObterTagIE();
+            ObterTagFechamentoEstablecimento();
+
+            return _tag;
         }
 
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
+        private void ObterTagAberturaEstablecimento()
+            => _tag.Append("<Estabelecimento>");
+
+        private void ObterTagIE()
+            => _tag.Append($"<Ie>{Estabelecimento.Ie}</Ie>");
+
+        private void ObterTagFechamentoEstablecimento()
+            => _tag.Append("</Estabelecimento>");
 
     }
 }

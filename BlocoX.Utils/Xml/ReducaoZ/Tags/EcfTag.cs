@@ -27,22 +27,27 @@
 /* http://www.opensource.org/licenses/lgpl-license.php                          */
 /*                                                                              */
 /********************************************************************************/
-using System.Collections.Generic;
 
-namespace BlocoX.Modelos.ReducaoZ
+using BlocoX.Modelos.ReducaoZ;
+using System.Text;
+
+namespace BlocoX.Utils.Xml.ReducaoZ.Tags
 {
-    public class BlocoXRZ
+    public class EcfTag
     {
-        public BlocoXRZ(Ecf ecf, DadosReducaoZ dadosReducaoZ, List<TotalizadorParcial> totalizadoresParciais)
+        private Ecf  ECF { get; set; }
+        private StringBuilder _tag;
+
+        public EcfTag(Ecf eCF)
+            => ECF = eCF;
+
+        public StringBuilder ObterTag()
         {
-            Ecf = ecf;
-            DadosReducaoZ = dadosReducaoZ;
-            TotalizadoresParciais = totalizadoresParciais;
+            _tag = new StringBuilder();
+
+            _tag.Append($"<NumeroFabricacao>{ECF.NumeroFabricacao}</NumeroFabricacao>");
+
+            return _tag;
         }
-
-        public Ecf Ecf { get; private set; }
-        public DadosReducaoZ DadosReducaoZ { get; private set; }
-        public List<TotalizadorParcial> TotalizadoresParciais { get; private set; }
-
     }
 }
