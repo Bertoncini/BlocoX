@@ -38,7 +38,7 @@ namespace BlocoX.AppTeste
     using System.Windows;
     using System.Windows.Controls;
     using System.Xml;
-
+     
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
