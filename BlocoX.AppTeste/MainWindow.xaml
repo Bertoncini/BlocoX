@@ -31,97 +31,97 @@
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
                 MinWidth="400">
-            <TabItem Header="Configurações">
-                <Grid Background="#FFE5E5E5">
-                    <StackPanel>
-                        <GroupBox Header="Certificado">
-                            <StackPanel>
+                <TabItem Header="Configurações">
+                    <Grid Background="#FFE5E5E5">
+                        <StackPanel>
+                            <GroupBox Header="Certificado">
                                 <StackPanel>
-                                    <TextBlock Margin="3">Local Certificado:</TextBlock>
-                                    <WrapPanel>
-                                        <TextBox x:Name="txtLocalCertificado" Margin="3" Width="200"></TextBox>
-                                        <Button Margin="3" x:Name="btnArqCertificado" Click="btnArqCertificado_Click">Arq. Certificado</Button>
-                                    </WrapPanel>
+                                    <StackPanel>
+                                        <TextBlock Margin="3">Local Certificado:</TextBlock>
+                                        <WrapPanel>
+                                            <TextBox x:Name="txtLocalCertificado" Margin="3" Width="200"></TextBox>
+                                            <Button Margin="3" x:Name="btnArqCertificado" Click="btnArqCertificado_Click">Arq. Certificado</Button>
+                                        </WrapPanel>
                                         <TextBlock Margin="3">Senha Certificado:</TextBlock>
                                         <WrapPanel>
                                             <TextBox x:Name="txtSenhaCertificado" Margin="3" Width="200" TextChanged="txtSenhaCertificado_TextChanged"></TextBox>
                                         </WrapPanel>
                                     </StackPanel>
-                            </StackPanel>
-                        </GroupBox>
-                        <GroupBox Header="XSD">
-                            <StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="XSD">
                                 <StackPanel>
-                                    <TextBlock Margin="3">Validar XSD</TextBlock>
-                                    <StackPanel Orientation="Horizontal">
-                                        <RadioButton x:Name="rdbXsdSim" GroupName="xsd" Margin="3">Sim</RadioButton>
-                                        <RadioButton GroupName="xsd" Margin="3" IsChecked="True">Não</RadioButton>
+                                    <StackPanel>
+                                        <TextBlock Margin="3">Validar XSD</TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton x:Name="rdbXsdSim" GroupName="xsd" Margin="3">Sim</RadioButton>
+                                            <RadioButton GroupName="xsd" Margin="3" IsChecked="True">Não</RadioButton>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Margin="5" IsEnabled="{Binding ElementName=rdbXsdSim, Path=IsChecked}">
+                                        <TextBlock Margin="3">Diretório XSD</TextBlock>
+                                        <WrapPanel>
+                                            <TextBox x:Name="txtDiretorioXsd" Margin="3" Width="200"></TextBox>
+                                            <Button Margin="3">Diretorio</Button>
+                                        </WrapPanel>
                                     </StackPanel>
                                 </StackPanel>
-                                <StackPanel Margin="5" IsEnabled="{Binding ElementName=rdbXsdSim, Path=IsChecked}">
-                                    <TextBlock Margin="3">Diretório XSD</TextBlock>
-                                    <WrapPanel>
-                                        <TextBox x:Name="txtDiretorioXsd" Margin="3" Width="200"></TextBox>
-                                        <Button Margin="3">Diretorio</Button>
-                                    </WrapPanel>
-                                </StackPanel>
-                            </StackPanel>
-                        </GroupBox>
+                            </GroupBox>
 
-                        <GroupBox Header="Arquivos">
-                            <StackPanel>
+                            <GroupBox Header="Arquivos">
                                 <StackPanel>
-                                    <TextBlock Margin="3">Salvar Arquivos</TextBlock>
-                                    <StackPanel Orientation="Horizontal">
-                                        <RadioButton x:Name="rdbArquivosSim" GroupName="Arquivos" Margin="3">Sim</RadioButton>
-                                        <RadioButton GroupName="Arquivos" Margin="3" IsChecked="True">Não</RadioButton>
+                                    <StackPanel>
+                                        <TextBlock Margin="3">Salvar Arquivos</TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton x:Name="rdbArquivosSim" GroupName="Arquivos" Margin="3">Sim</RadioButton>
+                                            <RadioButton GroupName="Arquivos" Margin="3" IsChecked="True">Não</RadioButton>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Margin="5" IsEnabled="{Binding ElementName=rdbArquivosSim, Path=IsChecked}">
+                                        <TextBlock>Diretório Salvar Arquivo</TextBlock>
+                                        <WrapPanel>
+                                            <TextBox x:Name="txtDiretorioSalvaArquivo" Margin="3" Width="200"></TextBox>
+                                            <Button Margin="3">Diretorio</Button>
+                                        </WrapPanel>
                                     </StackPanel>
                                 </StackPanel>
-                                <StackPanel Margin="5" IsEnabled="{Binding ElementName=rdbArquivosSim, Path=IsChecked}">
-                                    <TextBlock>Diretório Salvar Arquivo</TextBlock>
-                                    <WrapPanel>
-                                        <TextBox x:Name="txtDiretorioSalvaArquivo" Margin="3" Width="200"></TextBox>
-                                        <Button Margin="3">Diretorio</Button>
-                                    </WrapPanel>
-                                </StackPanel>
-                            </StackPanel>
-                        </GroupBox>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Estabelecimento">
-                <Grid Background="#FFE5E5E5">
-                    <StackPanel>
-                        <StackPanel Margin="5">
-                            <TextBlock>Razão Social:</TextBlock>
-                            <TextBox x:Name="txtEstabelecimentoRazaoSocial"></TextBox>
+                            </GroupBox>
                         </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Estabelecimento">
+                    <Grid Background="#FFE5E5E5">
+                        <StackPanel>
                             <StackPanel Margin="5">
-                                <TextBlock>CNPJ:</TextBlock>
+                                <TextBlock>Razão Social:</TextBlock>
+                                <TextBox x:Name="txtEstabelecimentoRazaoSocial"></TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Margin="5">
+                                    <TextBlock>CNPJ:</TextBlock>
                                     <TextBox x:Name="txtEstabelecimentoCnpj" Width="200"></TextBox>
-                            </StackPanel>
-                            <StackPanel Margin="5">
-                                <TextBlock>IE:</TextBlock>
+                                </StackPanel>
+                                <StackPanel Margin="5">
+                                    <TextBlock>IE:</TextBlock>
                                     <TextBox Width="100" x:Name="txtEstabelecimentoIe"></TextBox>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Software">
-                <Grid Background="#FFE5E5E5">
-                    <StackPanel>
-                        <StackPanel Margin="5">
-                            <TextBlock>Número Credenciamento:</TextBlock>
-                            <TextBox x:Name="txtNumeroCredenciamentoSW"></TextBox>
-                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Software">
+                    <Grid Background="#FFE5E5E5">
+                        <StackPanel>
+                            <StackPanel Margin="5">
+                                <TextBlock>Número Credenciamento:</TextBlock>
+                                <TextBox x:Name="txtNumeroCredenciamentoSW"></TextBox>
+                            </StackPanel>
 
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-        </TabControl>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+            </TabControl>
             <Button Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Click="btnSalvarConfig_Click">SALVAR</Button>
         </StackPanel>
         <GroupBox Grid.Column="1" 
@@ -130,24 +130,19 @@
                   VerticalAlignment="Top"
                   Header="Serviços">
             <StackPanel>
-                <GroupBox Header="ReduçãoZ">
-                    <WrapPanel>
-                        <Button Margin="3" Width="100" x:Name="btnRzConsultar" Click="btnRzConsultar_Click">Consultar</Button>
-                        <Button Margin="3" Width="100" x:Name="btnRzSituacaoPafEcf" Click="btnRzSituacaoPafEcf_Click">Situação Paf Ecf</Button>
-                        <Button Margin="3" Width="100" x:Name="btnRzValidar" Click="btnRzValidar_Click">Validar</Button>
-                        <Button Margin="3" Width="100" x:Name="btnRzEnviar" Click="btnRzEnviar_Click">Enviar</Button>
-                    </WrapPanel>
-                </GroupBox>
-                <GroupBox Header="Estoque">
-                    <WrapPanel>
-                        <Button Margin="3" Width="100" x:Name="btnEstConsultar" Click="btnEstConsultar_Click">Consultar</Button>
-                        <Button Margin="3" Width="100" x:Name="btnEstSituacaoPafEcf" Click="btnEstSituacaoPafEcf_Click">Situação Paf Ecf</Button>
-                        <Button Margin="3" Width="100" x:Name="btnEstValidar" Click="btnEstValidar_Click">Validar</Button>
-                        <Button Margin="3" Width="100" x:Name="btnEstEnviar" Click="btnEstEnviar_Click">Enviar</Button>
-                    </WrapPanel>
-                </GroupBox>
+                <WrapPanel>
+                    <Button Margin="3" Width="100" x:Name="btnConsultarHistoricoArquivo" Click="btnConsultarHistoricoArquivo_Click">Cons. Hist. Arquivo</Button>
+                    <Button Margin="3" Width="100" x:Name="btnProcessamentoArquivo" Click="btnConsultarProcessamentoArquivo_Click">Cons. Proc. Arquivo</Button>
+                    <Button Margin="3" Width="100" x:Name="btnDownloadArquivo" Click="btnDownloadArquivo_Click">Download Arquivo</Button>
+                    <Button Margin="3" Width="100" x:Name="btnCancelarArquivo" Click="btnCancelarArquivo_Click">Cancelar Arquivo</Button>
+                    <Button Margin="3" Width="100" x:Name="btnConsultarPendenciaContribuinte" Click="btnConsultarPendenciaContribuinte_Click">Cons. Pend. Contribuinte</Button>
+                    <Button Margin="3" Width="100" x:Name="btnConsultarPendenciDesenvolvedorPafEcf" Click="btnConsultarPendenciDesenvolvedorPafEcf_Click">Cons. Pend. Desenv. PafEcf</Button>
+                    <Button Margin="3" Width="100" x:Name="btnListarArquivos" Click="btnListarArquivos_Click">Listar Arquivos</Button>
+                    <Button Margin="3" Width="100" x:Name="btnTransmitirReducaoZ" Click="btnTransmitirReducaoZ_Click">Trans. Redução Z</Button>
+                    <Button Margin="3" Width="100" x:Name="btnTransmitirEstoque" Click="btnTransmitirEstoque_Click">Trans. Estoque</Button>
+                </WrapPanel>
             </StackPanel>
-           
+
         </GroupBox>
 
         <TabControl 

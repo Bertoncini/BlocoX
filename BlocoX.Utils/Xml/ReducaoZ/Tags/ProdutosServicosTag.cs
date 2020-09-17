@@ -66,7 +66,7 @@ namespace BlocoX.Utils.Xml.ReducaoZ.Tags
 
                 _tag.Append($"<CodigoCEST>{Produto.CodigoCEST}</CodigoCEST>");
 
-                _tag.Append($"<CodigoNCMSH>{Produto.NCM}</CodigoNCMSH>");
+                _tag.Append($"<CodigoNCMSH>{Produto.CodigoNCMSH}</CodigoNCMSH>");
 
                 _tag.Append($"<CodigoProprio>{Produto.CodigoProprio}</CodigoProprio>");
 

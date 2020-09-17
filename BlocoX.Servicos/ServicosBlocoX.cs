@@ -35,23 +35,132 @@ namespace BlocoX.Servicos
     using System.IO.Compression;
     using System.Text;
 
-    public class ServicosBlocoX
+    public class ServicosBlocoX : IBlocoX
     {
-        public Retorno Consultar(string pRecibo)
-        {
-            var ws = new WebService("http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx", "Consultar");
+        const string urlWebServicesBase = "http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx";
+        const string SoapActionBase = "http://webservices.sef.sc.gov.br/wsDfeSiv/";
 
-            ws.Params.Add("pRecibo", pRecibo);
+        public Retorno CancelarArquivo(string recibo, string motivo)
+        {
+            var ws = new WebService(urlWebServicesBase, "CancelarArquivo", SoapActionBase);
+            var xml = Utils.XML.BlocoXCancelarArquivoToXml(recibo, motivo).InnerXml;
+            var pXml = Utils.XML.AssinarXML(xml, "Manutencao").Replace("<", "&lt;").Replace(">", "&gt;");
+            ws.Params.Add("pXml", pXml);
+
             ws.Invoke();
 
             return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
         }
 
-        public Retorno ConsultarSituacaoPafEcf(string pXml)
+        public Retorno ConsultarHistoricoArquivo(string recibo)
         {
-            var ws = new WebService("http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx", "ConsultarSituacaoPafEcf");
+            var ws = new WebService(urlWebServicesBase, "ConsultarHistoricoArquivo", SoapActionBase);
+            var xml = Utils.XML.BlocoXConsultarHistoricoArquivoToXml(recibo).InnerXml;
+            var pXml = Utils.XML.AssinarXML(xml, "ConsultarHistoricoArquivo").Replace("<", "&lt;").Replace(">", "&gt;");
+            ws.Params.Add("pXml", pXml);
+
+            ws.Invoke();
+
+            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
+        }
+
+        public Retorno ConsultarPendenciasContribuinte(string ie)
+        {
+            var ws = new WebService(urlWebServicesBase, "ConsultarPendenciasContribuinte", SoapActionBase);
+            var xml = Utils.XML.BlocoXConsultarPendenciasContribuinteToXml(ie).InnerXml;
+            var pXml = Utils.XML.AssinarXML(xml, "ConsultarPendenciasContribuinte").Replace("<", "&lt;").Replace(">", "&gt;");
+
+            ws.Params.Add("pXml", pXml);
+
+            ws.Invoke();
+
+            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
+        }
+
+        public Retorno ConsultarPendenciasDesenvolvedorPafEcf(string cnpj)
+        {
+            var ws = new WebService(urlWebServicesBase, "ConsultarPendenciasDesenvolvedorPafEcf", SoapActionBase);
+            var xml = Utils.XML.BlocoXConsultarPendenciasDesenvolvedorPafEcfToXml(cnpj).InnerXml;
+            var pXml = Utils.XML.AssinarXML(xml, "ConsultarPendenciasDesenvolvedorPafEcf").Replace("<", "&lt;").Replace(">", "&gt;");
+
+            ws.Params.Add("pXml", pXml);
+
+            ws.Invoke();
+
+            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
+        }
+
+        public Retorno ConsultarProcessamentoArquivo(string recibo)
+        {
+            var ws = new WebService(urlWebServicesBase, "ConsultarProcessamentoArquivo", SoapActionBase);
+            var xml = Utils.XML.BlocoXConsultarProcessamentoArquivoToXml(recibo).InnerXml;
+            var pXml = Utils.XML.AssinarXML(xml, "Manutencao").Replace("<", "&lt;").Replace(">", "&gt;");
+
+            ws.Params.Add("pXml", pXml);
+
+            ws.Invoke();
+
+            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
+        }
+
+        public Retorno ListarArquivos(string ie)
+        {
+            var ws = new WebService(urlWebServicesBase, "ListarArquivos", SoapActionBase);
+            var xml = Utils.XML.BlocoXListaArquivosToXml(ie).InnerXml;
+            var pXml = Utils.XML.AssinarXML(xml, "ListarArquivos").Replace("<", "&lt;").Replace(">", "&gt;");
+
+            ws.Params.Add("pXml", pXml);
+
+            ws.Invoke();
+
+            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
+        }
+
+        public Retorno TransmitirArquivoRZ(string xmlReducaoZ)
+        {
+            var ws = new WebService(urlWebServicesBase, "TransmitirArquivo", SoapActionBase);
+
+            var xmlCompactado = Compacta(xmlReducaoZ);
+
+            ws.Params.Add("pXmlCompactado", xmlCompactado);
+
+            ws.Invoke();
+
+            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
+        }
+
+        public Retorno TransmitirArquivoEstoque(string xmlEstoque)
+        {
+            var ws = new WebService(urlWebServicesBase, "TransmitirArquivo", SoapActionBase);
+
+            var xmlCompactado = Compacta(xmlEstoque);
+
+            ws.Params.Add("pXmlCompactado", xmlCompactado);
+
+            ws.Invoke();
+
+            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
+        }
+
+        public Retorno DownloadArquivo(string recibo)
+        {
+            var ws = new WebService(urlWebServicesBase, "DownloadArquivo", SoapActionBase);
+            var xml = Utils.XML.BlocoXDownloadArquivoToXml(recibo).InnerXml;
+            var pXml = Utils.XML.AssinarXML(xml, "ListarArquivos").Replace("<", "&lt;").Replace(">", "&gt;");
+
+            ws.Params.Add("pXml", pXml);
+
+            ws.Invoke();
+
+            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
+        }
+
+        public Retorno ReprocessarArquivo() => throw new NotImplementedException();
+        public Retorno ConsultarStatusMetodosBlocoX() => throw new NotImplementedException();
 
 
+        private static string Compacta(string text)
+        {
             var fileName = "export_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".xml";
 
             byte[] fileBytes = null;
@@ -66,7 +175,7 @@ namespace BlocoX.Servicos
                     var zipItem = zip.CreateEntry(fileName);
 
                     // add the item bytes to the zip entry by opening the original file and copying the bytes 
-                    using (var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(pXml)))
+                    using (var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(text)))
                     using (var entryStream = zipItem.Open())
                         originalFileMemoryStream.CopyTo(entryStream);
                 }
@@ -74,84 +183,9 @@ namespace BlocoX.Servicos
                 fileBytes = memoryStream.ToArray();
             }
 
-            ws.Params.Add("pXml", Convert.ToBase64String(fileBytes));
-            ws.Invoke();
-            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
+            return Convert.ToBase64String(fileBytes);
         }
 
-        public Retorno Enviar(string pXml)
-        {
-            var ws = new WebService("http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx", "Enviar");
-
-            var fileName = "export_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".xml";
-
-            byte[] fileBytes = null;
-
-            // create a working memory stream
-            using (var memoryStream = new MemoryStream())
-            {
-                // create a zip
-                using (var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-                {
-                    // add the item name to the zip
-                    var zipItem = zip.CreateEntry(fileName);
-
-                    // add the item bytes to the zip entry by opening the original file and copying the bytes 
-                    using (var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(pXml)))
-                    using (var entryStream = zipItem.Open())
-                        originalFileMemoryStream.CopyTo(entryStream);
-                }
-
-                fileBytes = memoryStream.ToArray();
-            }
-
-            ws.Params.Add("pXmlZipado", Convert.ToBase64String(fileBytes));
-
-            ws.Invoke();
-
-            return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
-        }
-
-        public Retorno Validar(string pXml)
-        {
-            var ws = new WebService("http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx", "Validar");
-            try
-            {
-                var fileName = "export_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".xml";
-
-                byte[] fileBytes = null;
-
-                // create a working memory stream
-                using (var memoryStream = new MemoryStream())
-                {
-                    // create a zip
-                    using (var zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-                    {
-                        // add the item name to the zip
-                        var zipItem = zip.CreateEntry(fileName);
-
-                        // add the item bytes to the zip entry by opening the original file and copying the bytes 
-                        using (var originalFileMemoryStream = new MemoryStream(Encoding.ASCII.GetBytes(pXml)))
-                        using (var entryStream = zipItem.Open())
-                            originalFileMemoryStream.CopyTo(entryStream);
-                    }
-
-                    fileBytes = memoryStream.ToArray();
-                }
-
-                ws.Params.Add("pXml", Convert.ToBase64String(fileBytes));
-
-                ws.Params.Add("pValidarPafEcfEEcf", "true");
-                ws.Params.Add("pValidarAssinaturaDigital", "true");
-                ws.Invoke();
-                return new Retorno(ws.ResultXML, ws.ResultString, ws.SoapStr);
-            }
-            catch (Exception)
-            {
-                return new Retorno(ws.ResultXML, "Problema ao validar arquivo", ws.SoapStr);
-            }
-
-        }
     }
 
 }

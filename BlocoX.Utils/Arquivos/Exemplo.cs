@@ -91,5 +91,7 @@ namespace BlocoX.Utils.Arquivos
         public string EstoqueJson() => new JavaScriptSerializer().Serialize(BlocoXEstoque());
 
         public XmlDocument EstoqueXml() => BlocoXEstoque().BlocoXEstoqueToXml();
+
+        public XmlDocument ListarArquivoXml() => XML.BlocoXListaArquivosToXml("257477110");
     }
 }

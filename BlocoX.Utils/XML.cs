@@ -126,6 +126,128 @@ namespace BlocoX.Utils
             return xml.StringToXml();
         }
 
+        public static XmlDocument BlocoXListaArquivosToXml(string ie)
+        {
+            if (ie == null)
+                throw new System.ArgumentNullException(nameof(ie));
+
+            var xml =
+          $@"
+<ListarArquivos Versao='1.0'>
+    <Mensagem>
+        <IE>{ie}</IE>
+    </Mensagem>
+</ListarArquivos>
+";
+
+            return xml.StringToXml();
+        }
+        public static XmlDocument BlocoXDownloadArquivoToXml(string recibo)
+        {
+            if (recibo == null)
+                throw new System.ArgumentNullException(nameof(recibo));
+
+            var xml =
+          $@"
+<DownloadArquivo Versao='1.0'>
+    <Mensagem>
+        <Recibo>{recibo}</Recibo>
+    </Mensagem>
+</DownloadArquivo>
+";
+
+            return xml.StringToXml();
+        }
+
+        public static XmlDocument BlocoXConsultarPendenciasContribuinteToXml(string ie)
+        {
+            if (ie == null)
+                throw new System.ArgumentNullException(nameof(ie));
+
+            var xml =
+          $@"
+<ConsultarPendenciasContribuinte Versao='1.0'>
+    <Mensagem>
+        <IE>{ie}</IE>
+    </Mensagem>
+</ConsultarPendenciasContribuinte>
+";
+
+            return xml.StringToXml();
+        }
+
+        public static XmlDocument BlocoXConsultarHistoricoArquivoToXml(string recibo)
+        {
+            if (recibo == null)
+                throw new System.ArgumentNullException(nameof(recibo));
+
+            var xml =
+          $@"
+<ConsultarHistoricoArquivo Versao='1.0'>
+    <Mensagem>
+        <Recibo>{recibo}</Recibo>
+    </Mensagem>
+</ConsultarHistoricoArquivo>
+";
+
+            return xml.StringToXml();
+        }
+
+        public static XmlDocument BlocoXConsultarProcessamentoArquivoToXml(string recibo)
+        {
+            if (recibo == null)
+                throw new System.ArgumentNullException(nameof(recibo));
+
+            var xml =
+          $@"
+<Manutencao Versao='1.0'>
+    <Mensagem>
+        <Recibo>{recibo}</Recibo>
+    </Mensagem>
+</Manutencao>
+";
+
+            return xml.StringToXml();
+        }
+
+        public static XmlDocument BlocoXCancelarArquivoToXml(string recibo, string motivo)
+        {
+            if (recibo == null)
+                throw new System.ArgumentNullException(nameof(recibo));
+
+            if (motivo == null)
+                throw new System.ArgumentNullException(nameof(motivo));
+
+            var xml =
+          $@"
+<Manutencao Versao='1.0'>
+    <Mensagem>
+        <Recibo>{recibo}</Recibo>
+        <Motivo>{motivo}</Motivo>
+    </Mensagem>
+</Manutencao>
+";
+
+            return xml.StringToXml();
+        }
+
+        public static XmlDocument BlocoXConsultarPendenciasDesenvolvedorPafEcfToXml(string cnpj)
+        {
+            if (cnpj == null)
+                throw new System.ArgumentNullException(nameof(cnpj));
+
+            var xml =
+          $@"
+<ConsultarPendenciasDesenvolvedorPafEcf Versao='1.0'>
+    <Mensagem>
+        <CNPJ>{cnpj}</CNPJ>
+    </Mensagem>
+</ConsultarPendenciasDesenvolvedorPafEcf>
+";
+
+            return xml.StringToXml();
+        }
+
         public static XmlDocument StringToXml(this string xmlString)
         {
             var xml = new XmlDocument();
@@ -136,7 +258,7 @@ namespace BlocoX.Utils
 
         private static string xmlStringBlocoXRzTotalizadorParcial(List<dynamic> totalizadores)
         {
-               var rzTotalizadoresParciais = string.Empty;
+            var rzTotalizadoresParciais = string.Empty;
 
             foreach (var totalizador in totalizadores)
             {
@@ -211,7 +333,7 @@ namespace BlocoX.Utils
             <Descricao>{produto.Descricao.Substring(produto.Descricao.LastIndexOf("#") + 1)}</Descricao>
             <CodigoGTIN>{produto.CodigoGTIN}</CodigoGTIN>
             <CodigoCEST>{produto.CodigoCEST}</CodigoCEST>
-            <CodigoNCMSH>{produto.NCM}</CodigoNCMSH>
+            <CodigoNCMSH>{produto.CodigoNCMSH}</CodigoNCMSH>
             <CodigoProprio>{produto.CodigoProprio}</CodigoProprio>
             <Quantidade>{produto.Quantidade.ToString("N2").Replace(".", "")}</Quantidade>
             <Unidade>{produto.Unidade}</Unidade>

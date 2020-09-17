@@ -36,7 +36,7 @@ namespace BlocoX.Modelos.ReducaoZ
             Descricao = descricao;
             CodigoGTIN = codigoGTIN;
             CodigoCEST = codigoCEST;
-            NCM = nCM;
+            CodigoNCMSH = nCM;
             CodigoProprio = codigoProprio;
             Quantidade = quantidade;
             Unidade = unidade;
@@ -50,7 +50,7 @@ namespace BlocoX.Modelos.ReducaoZ
         public string Descricao { get; private set; }
         public string CodigoGTIN { get; private set; }
         public string CodigoCEST { get; private set; }
-        public string NCM { get; private set; }
+        public string CodigoNCMSH { get; private set; }
         public string CodigoProprio { get; private set; }
         public decimal Quantidade { get; private set; }
         public string Unidade { get; private set; }

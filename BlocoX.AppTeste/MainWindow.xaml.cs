@@ -71,47 +71,98 @@ namespace BlocoX.AppTeste
 
         private MessageBoxResult mensagemConfrimacao(string mensagem) => MessageBox.Show(mensagem, "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly);
 
-        private void btnRzConsultar_Click(object sender, RoutedEventArgs e)
+        private void btnConsultarHistoricoArquivo_Click(object sender, RoutedEventArgs e)
         {
-            var input = showInput("Consultar recibo", "Informe o número do Recibo a ser consultado:");
+            var input = showInput("Consultar Historico Arquivo", "Informe o número do Recibo a ser consultado:");
             if (string.IsNullOrWhiteSpace(input))
             {
                 mensagemAviso("O número do recibo é obrigatório!");
                 return;
             }
 
-            trataRetorno(servicos.Consultar(input));
+            trataRetorno(servicos.ConsultarHistoricoArquivo(input));
         }
 
-        private void btnRzSituacaoPafEcf_Click(object sender, RoutedEventArgs e)
+        private void btnConsultarProcessamentoArquivo_Click(object sender, RoutedEventArgs e)
         {
-            var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
+            var input = showInput("Consultar Processamento Arquivo", "Informe o número do Recibo a ser consultado:");
             if (string.IsNullOrWhiteSpace(input))
             {
-                mensagemAviso("O arquivo XML é obrigatório!");
+                mensagemAviso("O número do recibo é obrigatório!");
                 return;
             }
-            var xmlDoc = new System.Xml.XmlDocument();
-            xmlDoc.Load(input);
 
-            trataRetorno(servicos.ConsultarSituacaoPafEcf(xmlDoc.InnerXml));
+            trataRetorno(servicos.ConsultarProcessamentoArquivo(input));
         }
 
-        private void btnRzValidar_Click(object sender, RoutedEventArgs e)
+        private void btnDownloadArquivo_Click(object sender, RoutedEventArgs e)
         {
-            var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
+            var input = showInput("Download Arquivo", "Informe o número do Recibo para realizar o download do arquivo:");
             if (string.IsNullOrWhiteSpace(input))
             {
-                mensagemAviso("O arquivo XML é obrigatório!");
+                mensagemAviso("O número do recibo é obrigatório!");
                 return;
             }
-            var xmlDoc = new System.Xml.XmlDocument();
-            xmlDoc.Load(input);
 
-            trataRetorno(servicos.Validar(xmlDoc.InnerXml));
+            trataRetorno(servicos.DownloadArquivo(input));
         }
 
-        private void btnRzEnviar_Click(object sender, RoutedEventArgs e)
+        private void btnCancelarArquivo_Click(object sender, RoutedEventArgs e)
+        {
+            var recibo = showInput("Cancelar Arquivo", "Informe o número do Recibo a ser cancelado:");
+            if (string.IsNullOrWhiteSpace(recibo))
+            {
+                mensagemAviso("O número do recibo é obrigatório!");
+                return;
+            }
+
+            var motivo = showInput("Cancelar Arquivo", "Informe o motivo do cancelamento:");
+            if (string.IsNullOrWhiteSpace(motivo))
+            {
+                mensagemAviso("O número do motivo é obrigatório!");
+                return;
+            }
+
+            trataRetorno(servicos.CancelarArquivo(recibo, motivo));
+        }
+
+        private void btnConsultarPendenciaContribuinte_Click(object sender, RoutedEventArgs e)
+        {
+            var input = showInput("Consultar Pendencia Contribuinte", "Informe o número da Inscrição Estadual:");
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                mensagemAviso("O número da Inscrição estadual é obrigatório!");
+                return;
+            }
+
+            trataRetorno(servicos.ConsultarPendenciasContribuinte(input));
+        }
+
+        private void btnConsultarPendenciDesenvolvedorPafEcf_Click(object sender, RoutedEventArgs e)
+        {
+            var input = showInput("Consultar Pendencia Desenvolvedor PAF ECF", "Informe o número o CNPJ:");
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                mensagemAviso("O número do CNPJ é obrigatório!");
+                return;
+            }
+
+            trataRetorno(servicos.ConsultarPendenciasDesenvolvedorPafEcf(input));
+        }
+
+        private void btnListarArquivos_Click(object sender, RoutedEventArgs e)
+        {
+            var input = showInput("Listar Arquivos", "Informe o número da Inscrição Estadual:");
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                mensagemAviso("O número da Inscrição estadual é obrigatório!");
+                return;
+            }
+
+            trataRetorno(servicos.ListarArquivos(input));
+        }
+
+        private void btnTransmitirReducaoZ_Click(object sender, RoutedEventArgs e)
         {
             var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
             var xmlDoc = new System.Xml.XmlDocument();
@@ -128,55 +179,14 @@ namespace BlocoX.AppTeste
 
                 xmlDoc = new Utils.Arquivos.Exemplo().BlocoXRz();
                 xmlDoc.AssinarXML("ReducaoZ");
-
             }
             else
                 xmlDoc.Load(input);
 
-            trataRetorno(servicos.Enviar(xmlDoc.InnerXml));
+            trataRetorno(servicos.TransmitirArquivoRZ(xmlDoc.InnerXml));
         }
 
-        private void btnEstConsultar_Click(object sender, RoutedEventArgs e)
-        {
-            var input = showInput("Consultar recibo", "Informe o número do Recibo a ser consultado:");
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                mensagemAviso("O número do recibo é obrigatório!");
-                return;
-            }
-
-            trataRetorno(servicos.Consultar(input));
-        }
-
-        private void btnEstSituacaoPafEcf_Click(object sender, RoutedEventArgs e)
-        {
-            var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                mensagemAviso("O arquivo XML é obrigatório!");
-                return;
-            }
-            var xmlDoc = new System.Xml.XmlDocument();
-            xmlDoc.Load(input);
-
-            trataRetorno(servicos.ConsultarSituacaoPafEcf(xmlDoc.InnerXml));
-        }
-
-        private void btnEstValidar_Click(object sender, RoutedEventArgs e)
-        {
-            var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                mensagemAviso("O arquivo XML é obrigatório!");
-                return;
-            }
-            var xmlDoc = new System.Xml.XmlDocument();
-            xmlDoc.Load(input);
-
-            trataRetorno(servicos.Validar(xmlDoc.InnerXml));
-        }
-
-        private void btnEstEnviar_Click(object sender, RoutedEventArgs e)
+        private void btnTransmitirEstoque_Click(object sender, RoutedEventArgs e)
         {
             var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
             var xmlDoc = new System.Xml.XmlDocument();
@@ -193,12 +203,11 @@ namespace BlocoX.AppTeste
 
                 xmlDoc = new Utils.Arquivos.Exemplo().EstoqueXml();
                 xmlDoc.AssinarXML("Estoque");
-
             }
             else
                 xmlDoc.Load(input);
 
-            trataRetorno(servicos.Enviar(xmlDoc.InnerXml));
+            trataRetorno(servicos.TransmitirArquivoEstoque(xmlDoc.InnerXml));
         }
 
         private void trataRetorno(Retorno retorno)
@@ -329,6 +338,6 @@ namespace BlocoX.AppTeste
         private void txtSenhaCertificado_TextChanged(object sender, TextChangedEventArgs e)
         {
             Config.localSenhaCertificado = new System.Collections.Generic.KeyValuePair<string, string>(txtLocalCertificado.Text, txtSenhaCertificado.Text);
-        }        
+        }
     }
 }

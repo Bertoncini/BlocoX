@@ -44,11 +44,13 @@ namespace BlocoX.Servicos.wsdl
         public XmlDocument ResultXML { get; private set; }
         public string ResultString { get; private set; }
         public string SoapStr { get; private set; }
+        public string SoapAction { get; private set; }
 
-        public WebService(string url, string methodName)
+        public WebService(string urlBase, string methodName, string soapActionBase)
         {
-            Url = url;
-            MethodName = methodName;
+            Url = urlBase.Trim();
+            MethodName = methodName.Trim();
+            SoapAction = soapActionBase.Trim();
         }
 
         /// <summary>
@@ -68,37 +70,37 @@ namespace BlocoX.Servicos.wsdl
                  xmlns:xsd=""http://www.w3.org/2001/XMLSchema""
                  xmlns:soap=""http://schemas.xmlsoap.org/soap/envelope/"">
                  <soap:Body>
-                     <{0} xmlns=""http://tempuri.org/"">
-                      {1}
+                     <{0} xmlns=""{1}"">
+                      {2}
                     </{0}>
                  </soap:Body>
               </soap:Envelope>";
 
             var req = (HttpWebRequest)WebRequest.Create(Url);
-            req.Headers.Add("SOAPAction", "\"http://tempuri.org/" + MethodName.Trim() + "\"");
+            req.Headers.Add("SOAPAction", $"{SoapAction}{MethodName}");
             req.ContentType = "text/xml;charset=\"utf-8\"";
             req.Accept = "text/xml";
             req.Method = "POST";
 
-            using(var stm = req.GetRequestStream())
+            using (var stm = req.GetRequestStream())
             {
                 var postValues = "";
-                foreach(var param in Params)
+                foreach (var param in Params)
                 {
-                    if(encode)
+                    if (encode)
                         postValues += string.Format("<{0}>{1}</{0}>", HttpUtility.UrlEncode(param.Key.Trim()), HttpUtility.UrlEncode(param.Value.Trim()));
                     else
                         postValues += string.Format("<{0}>{1}</{0}>", param.Key.Trim(), param.Value.Trim());
                 }
 
-                SoapStr = string.Format(SoapStr, MethodName.Trim(), postValues);
-                using(var stmw = new StreamWriter(stm))
+                SoapStr = string.Format(SoapStr, MethodName, SoapAction, postValues);
+                using (var stmw = new StreamWriter(stm))
                 {
                     stmw.Write(SoapStr);
                 }
             }
 
-            using(var responseReader = new StreamReader(req.GetResponse().GetResponseStream()))
+            using (var responseReader = new StreamReader(req.GetResponse().GetResponseStream()))
             {
                 var result = responseReader.ReadToEnd();
                 ResultXML = result.StringToXml();
