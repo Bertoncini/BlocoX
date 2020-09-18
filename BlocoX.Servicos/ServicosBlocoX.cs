@@ -203,7 +203,7 @@ namespace BlocoX.Servicos
                 return;
 
             diretorio = $"{_config.DiretorioSalvarArquivos}\\{diretorio}";
-            var caminhoArquivo = $"{diretorio}{arquivoExtensao}";
+            var caminhoArquivo = $"{diretorio}\\{arquivoExtensao}";
 
             if (!Directory.Exists(diretorio))
                 Directory.CreateDirectory(diretorio);
