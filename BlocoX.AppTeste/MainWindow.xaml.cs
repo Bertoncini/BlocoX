@@ -53,9 +53,9 @@ namespace BlocoX.AppTeste
             config = new Config
             (
                 rdbProducao.IsChecked.Value,
+                txtDiretorioSalvaArquivo.Text,
                 txtLocalCertificado.Text,
-                txtSenhaCertificado.Text,
-                txtDiretorioSalvaArquivo.Text
+                txtSenhaCertificado.Text
             );
 
             servicos = new ServicosBlocoX(config);

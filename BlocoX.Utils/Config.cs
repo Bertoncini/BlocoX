@@ -50,6 +50,10 @@ namespace BlocoX.Utils
 
             if (string.IsNullOrWhiteSpace(senhaCertificado))
                 throw new ArgumentNullException("Não foi informado a senha do Certificado");
+
+            DiretorioSalvarArquivos = diretorioSalvarArquivos;
+            CaminhoCertificado = caminhoCertificado;
+            SenhaCertificado = senhaCertificado;
         }
     }
 }
