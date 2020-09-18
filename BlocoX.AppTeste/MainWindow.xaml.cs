@@ -45,7 +45,21 @@ namespace BlocoX.AppTeste
     public partial class MainWindow : Window
     {
         private readonly string _path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        ServicosBlocoX servicos = new ServicosBlocoX();
+        ServicosBlocoX servicos;
+        Config config;
+
+        private void ValidarConfiguracaoServico()
+        {
+            config = new Config
+            (
+                rdbProducao.IsChecked.Value,
+                txtLocalCertificado.Text,
+                txtSenhaCertificado.Text,
+                txtDiretorioSalvaArquivo.Text
+            );
+
+            servicos = new ServicosBlocoX(config);
+        }
 
         public MainWindow()
         {
@@ -53,9 +67,9 @@ namespace BlocoX.AppTeste
 
             txtLocalCertificado.Text = readSetting("localCertificado");
             txtSenhaCertificado.Text = readSetting("senhaCertificado");
-            rdbXsdSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seValidaXsd")) ? "false" : readSetting("seValidaXsd"));
-            txtDiretorioXsd.Text = readSetting("diretorioXsd");
-            rdbArquivosSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seSalvaArquivo")) ? "false" : readSetting("seSalvaArquivo"));
+            //rdbXsdSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seValidaXsd")) ? "0" : readSetting("seValidaXsd"));
+            //txtDiretorioXsd.Text = readSetting("diretorioXsd");
+            rdbArquivosSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seSalvaArquivo")) ? "0" : readSetting("seSalvaArquivo"));
             txtDiretorioSalvaArquivo.Text = readSetting("diretorioSalvaArquivo");
 
             txtEstabelecimentoRazaoSocial.Text = readSetting("estabelecimentoRazaoSocial");
@@ -63,8 +77,6 @@ namespace BlocoX.AppTeste
             txtEstabelecimentoIe.Text = readSetting("estabelecimentoIe");
 
             txtNumeroCredenciamentoSW.Text = readSetting("swNumeroEstabelecimento");
-
-            Config.localSenhaCertificado = new System.Collections.Generic.KeyValuePair<string, string>(txtLocalCertificado.Text, txtSenhaCertificado.Text);
         }
 
         private void mensagemAviso(string mensagem) => MessageBox.Show(mensagem, "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
@@ -80,6 +92,7 @@ namespace BlocoX.AppTeste
                 return;
             }
 
+            ValidarConfiguracaoServico();
             trataRetorno(servicos.ConsultarHistoricoArquivo(input));
         }
 
@@ -92,6 +105,7 @@ namespace BlocoX.AppTeste
                 return;
             }
 
+            ValidarConfiguracaoServico();
             trataRetorno(servicos.ConsultarProcessamentoArquivo(input));
         }
 
@@ -104,6 +118,7 @@ namespace BlocoX.AppTeste
                 return;
             }
 
+            ValidarConfiguracaoServico();
             trataRetorno(servicos.DownloadArquivo(input));
         }
 
@@ -123,6 +138,7 @@ namespace BlocoX.AppTeste
                 return;
             }
 
+            ValidarConfiguracaoServico();
             trataRetorno(servicos.CancelarArquivo(recibo, motivo));
         }
 
@@ -135,6 +151,7 @@ namespace BlocoX.AppTeste
                 return;
             }
 
+            ValidarConfiguracaoServico();
             trataRetorno(servicos.ConsultarPendenciasContribuinte(input));
         }
 
@@ -147,6 +164,7 @@ namespace BlocoX.AppTeste
                 return;
             }
 
+            ValidarConfiguracaoServico();
             trataRetorno(servicos.ConsultarPendenciasDesenvolvedorPafEcf(input));
         }
 
@@ -159,6 +177,7 @@ namespace BlocoX.AppTeste
                 return;
             }
 
+            ValidarConfiguracaoServico();
             trataRetorno(servicos.ListarArquivos(input));
         }
 
@@ -178,16 +197,19 @@ namespace BlocoX.AppTeste
                 }
 
                 xmlDoc = new Utils.Arquivos.Exemplo().BlocoXRz();
-                xmlDoc.AssinarXML("ReducaoZ");
+                xmlDoc.AssinarXML("ReducaoZ", config.Certificado);
             }
             else
                 xmlDoc.Load(input);
 
+            ValidarConfiguracaoServico();
             trataRetorno(servicos.TransmitirArquivoRZ(xmlDoc.InnerXml));
         }
 
         private void btnTransmitirEstoque_Click(object sender, RoutedEventArgs e)
         {
+            ValidarConfiguracaoServico();
+
             var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
             var xmlDoc = new System.Xml.XmlDocument();
             if (string.IsNullOrWhiteSpace(input))
@@ -202,7 +224,7 @@ namespace BlocoX.AppTeste
                 }
 
                 xmlDoc = new Utils.Arquivos.Exemplo().EstoqueXml();
-                xmlDoc.AssinarXML("Estoque");
+                xmlDoc.AssinarXML("Estoque", config.Certificado);
             }
             else
                 xmlDoc.Load(input);
@@ -273,9 +295,11 @@ namespace BlocoX.AppTeste
         {
             addUpdateAppSettings("localCertificado", txtLocalCertificado.Text);
             addUpdateAppSettings("senhaCertificado", txtSenhaCertificado.Text);
-            addUpdateAppSettings("seValidaXsd", rdbXsdSim.IsChecked ?? false ? "true" : "false");
-            addUpdateAppSettings("diretorioXsd", txtDiretorioXsd.Text);
-            addUpdateAppSettings("seSalvaArquivo", rdbArquivosSim.IsChecked ?? false ? "true" : "false");
+
+            //addUpdateAppSettings("seValidaXsd", rdbXsdSim.IsChecked ?? false ? "1" : "0");
+            //addUpdateAppSettings("diretorioXsd", txtDiretorioXsd.Text);
+
+            addUpdateAppSettings("seSalvaArquivo", rdbArquivosSim.IsChecked ?? false ? "1" : "0");
             addUpdateAppSettings("diretorioSalvaArquivo", txtDiretorioSalvaArquivo.Text);
 
             addUpdateAppSettings("estabelecimentoRazaoSocial", txtEstabelecimentoRazaoSocial.Text);
@@ -298,7 +322,7 @@ namespace BlocoX.AppTeste
             }
         }
 
-        private static void addUpdateAppSettings(string key, string value)
+        private static void addUpdateAppSettings(string key, object value)
         {
             try
             {
@@ -306,11 +330,11 @@ namespace BlocoX.AppTeste
                 var settings = configFile.AppSettings.Settings;
                 if (settings[key] == null)
                 {
-                    settings.Add(key, value);
+                    settings.Add(key, value.ToString());
                 }
                 else
                 {
-                    settings[key].Value = value;
+                    settings[key].Value = value.ToString();
                 }
                 configFile.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
@@ -331,13 +355,58 @@ namespace BlocoX.AppTeste
             }
 
             txtLocalCertificado.Text = input;
-
-            Config.localSenhaCertificado = new System.Collections.Generic.KeyValuePair<string, string>(txtLocalCertificado.Text, txtSenhaCertificado.Text);
         }
 
-        private void txtSenhaCertificado_TextChanged(object sender, TextChangedEventArgs e)
+        private string selecionarDiretorio()
         {
-            Config.localSenhaCertificado = new System.Collections.Generic.KeyValuePair<string, string>(txtLocalCertificado.Text, txtSenhaCertificado.Text);
+            var diretorio = string.Empty;
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    diretorio = dialog.SelectedPath;
+            }
+
+            return diretorio;
+        }
+
+        private void btnDiretorioSalvarArquivos_Click(object sender, RoutedEventArgs e)
+        {
+            var caminho = selecionarDiretorio();
+            txtDiretorioSalvaArquivo.Text = caminho;
+        }
+
+        private void btnDiretorioXSD_Click(object sender, RoutedEventArgs e)
+        {
+            //var caminho = selecionarDiretorio();
+            //txtDiretorioXsd.Text = caminho;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -31,6 +31,8 @@ namespace BlocoX.Utils
 {
     using BlocoX.Utils.Enums;
     using System.Collections.Generic;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Text;
     using System.Xml;
 
     public static class XML
@@ -142,6 +144,7 @@ namespace BlocoX.Utils
 
             return xml.StringToXml();
         }
+
         public static XmlDocument BlocoXDownloadArquivoToXml(string recibo)
         {
             if (recibo == null)
@@ -414,21 +417,18 @@ namespace BlocoX.Utils
             return strProdutos;
         }
 
-        public static string AssinarXML(this string strXml, string tagAssinatura)
+        public static string AssinarXML(this string strXml, string tagAssinatura, X509Certificate2 certificado)
         {
-            var certificado = Config.Certificado;
             var xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.LoadXml(strXml);
 
-            xmlDocument = xmlDocument.AssinarXML(tagAssinatura);
+            xmlDocument = xmlDocument.AssinarXML(tagAssinatura, certificado);
 
             return xmlDocument.InnerXml;
         }
 
-        public static XmlDocument AssinarXML(this XmlDocument xmlDocument, string tagAssinatura)
+        public static XmlDocument AssinarXML(this XmlDocument xmlDocument, string tagAssinatura, X509Certificate2 certificado)
         {
-            var certificado = Config.Certificado;
-
             var reference = new System.Security.Cryptography.Xml.Reference
             {
                 Uri = ""
@@ -459,5 +459,52 @@ namespace BlocoX.Utils
 
             return xmlDocument;
         }
+
+        public static void ValidarXml(string xmlFilename, string schemaFilename)
+        {
+
+            var falhou = false;
+            var strValidation = new StringBuilder();
+
+            // Define o tipo de validação
+            var settings = new XmlReaderSettings();
+            settings.ValidationType = ValidationType.Schema;
+            // Carrega o arquivo de esquema
+            var schemas = new System.Xml.Schema.XmlSchemaSet();
+            settings.Schemas = schemas;
+            // Quando carregar o eschema, especificar o namespace que ele valida
+            // e a localização do arquivo 
+            schemas.Add(null, schemaFilename);
+            // Especifica o tratamento de evento para os erros de validacao
+            settings.ValidationEventHandler += (sender, args) =>
+            {
+                falhou = true;
+                // Exibe o erro da validação
+                strValidation.Append("Erros da validação : " + args.Message);
+            };
+            // cria um leitor para validação
+            var validator = XmlReader.Create(xmlFilename, settings);
+            try
+            {
+                // Faz a leitura de todos os dados XML
+                while (validator.Read()) { }
+            }
+            catch (XmlException err)
+            {
+                // Um erro ocorre se o documento XML inclui caracteres ilegais
+                // ou tags que não estão aninhadas corretamente
+                strValidation.Append("Ocorreu um erro critico durante a validacao XML.");
+                strValidation.Append("Erros da validação : " + err.Message);
+                falhou = true;
+            }
+            finally
+            {
+                validator.Close();
+            }
+            if (falhou)
+                throw new System.Exception(strValidation.ToString());
+        }
+
+
     }
 }

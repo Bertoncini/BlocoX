@@ -35,19 +35,21 @@ namespace BlocoX.Utils
 
     public class Config
     {
-        public static KeyValuePair<string, string> localSenhaCertificado = new KeyValuePair<string, string>();
-        public static X509Certificate2 Certificado
+        public bool Ambiente { get; private set; }
+        public string DiretorioSalvarArquivos { get; private set; }
+        public string CaminhoCertificado { get; private set; }
+        public string SenhaCertificado { get; private set; }
+
+        public X509Certificate2 Certificado => new X509Certificate2(CaminhoCertificado, SenhaCertificado);
+
+
+        public Config(bool ambiente, string diretorioSalvarArquivos, string caminhoCertificado, string senhaCertificado)
         {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(localSenhaCertificado.Key))
-                    throw new InvalidOperationException("Não foi informado o local do Certificado");
+            if (string.IsNullOrWhiteSpace(caminhoCertificado))
+                throw new ArgumentNullException("Não foi informado o local do Certificado");
 
-                if (string.IsNullOrWhiteSpace(localSenhaCertificado.Value))
-                    throw new InvalidOperationException("Não foi informado a senha do Certificado");
-
-                return new X509Certificate2(localSenhaCertificado.Key, localSenhaCertificado.Value);
-            }
+            if (string.IsNullOrWhiteSpace(senhaCertificado))
+                throw new ArgumentNullException("Não foi informado a senha do Certificado");
         }
     }
 }

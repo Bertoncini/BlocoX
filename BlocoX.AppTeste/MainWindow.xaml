@@ -34,6 +34,18 @@
                 <TabItem Header="Configurações">
                     <Grid Background="#FFE5E5E5">
                         <StackPanel>
+                            <GroupBox Header="Ambiente">
+                                <StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Margin="3">Tipo de ambiente</TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton x:Name="rdbProducao" GroupName="Arquivos" Margin="3">Produção</RadioButton>
+                                            <RadioButton GroupName="rdbHomologacao" Margin="3" IsChecked="True">Homologação</RadioButton>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+                            
                             <GroupBox Header="Certificado">
                                 <StackPanel>
                                     <StackPanel>
@@ -44,12 +56,13 @@
                                         </WrapPanel>
                                         <TextBlock Margin="3">Senha Certificado:</TextBlock>
                                         <WrapPanel>
-                                            <TextBox x:Name="txtSenhaCertificado" Margin="3" Width="200" TextChanged="txtSenhaCertificado_TextChanged"></TextBox>
+                                            <TextBox x:Name="txtSenhaCertificado" Margin="3" Width="200"></TextBox>
                                         </WrapPanel>
                                     </StackPanel>
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="XSD">
+                            
+                            <!--<GroupBox Header="XSD">
                                 <StackPanel>
                                     <StackPanel>
                                         <TextBlock Margin="3">Validar XSD</TextBlock>
@@ -62,11 +75,11 @@
                                         <TextBlock Margin="3">Diretório XSD</TextBlock>
                                         <WrapPanel>
                                             <TextBox x:Name="txtDiretorioXsd" Margin="3" Width="200"></TextBox>
-                                            <Button Margin="3">Diretorio</Button>
+                                            <Button Margin="3" x:Name="btnDiretorioXSD" Click="btnDiretorioXSD_Click">Diretorio</Button>
                                         </WrapPanel>
                                     </StackPanel>
                                 </StackPanel>
-                            </GroupBox>
+                            </GroupBox>-->
 
                             <GroupBox Header="Arquivos">
                                 <StackPanel>
@@ -81,7 +94,7 @@
                                         <TextBlock>Diretório Salvar Arquivo</TextBlock>
                                         <WrapPanel>
                                             <TextBox x:Name="txtDiretorioSalvaArquivo" Margin="3" Width="200"></TextBox>
-                                            <Button Margin="3">Diretorio</Button>
+                                            <Button Margin="3" x:Name="btnDiretorioSalvarArquivos" Click="btnDiretorioSalvarArquivos_Click">Diretorio</Button>
                                         </WrapPanel>
                                     </StackPanel>
                                 </StackPanel>
