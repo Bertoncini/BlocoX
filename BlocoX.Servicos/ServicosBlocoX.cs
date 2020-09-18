@@ -46,9 +46,9 @@ namespace BlocoX.Servicos
         {
             _config = config;
             if (_config.Ambiente)
-                urlWebServicesBase = "http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx";
-            else
                 urlWebServicesBase = "http://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx";
+            else
+                urlWebServicesBase = "http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx";
         }
 
         public Retorno CancelarArquivo(string recibo, string motivo)
