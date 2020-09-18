@@ -38,7 +38,7 @@ namespace BlocoX.Utils.Arquivos
 
     public class Exemplo
     {
-        public XmlDocument BlocoXRz()
+        public XmlDocument BlocoXRz(string ie, string numeroCredenciamentoSW)
         {
             //TOOD Implementar servico
 
@@ -52,8 +52,8 @@ namespace BlocoX.Utils.Arquivos
 
             var reducaoz = new XmlReducaoZ(blocoxRz);
 
-            var xml = new XMLBlocoX(new Modelos.Estabelecimento("257477110"),
-                                    new Modelos.PafEcf("123456789012345"),
+            var xml = new XMLBlocoX(new Modelos.Estabelecimento(ie),
+                                    new Modelos.PafEcf(numeroCredenciamentoSW),
                                     reducaoz);
 
             return xml.ObterXML();
@@ -72,7 +72,7 @@ namespace BlocoX.Utils.Arquivos
             => new ProdutoServico("PRODUTO ALIQUOTA 1200", "0", "1400300", "11041900", "220602", 2, "UN", 0M, 0M, 0M, 1000M, false);
 
 
-        public string RzJson() => new JavaScriptSerializer().Serialize(BlocoXRz());
+        public string RzJson(string ie, string numeroCredenciamentoSW) => new JavaScriptSerializer().Serialize(BlocoXRz(ie, numeroCredenciamentoSW));
 
         public Modelos.Estoque.BlocoXEstoque BlocoXEstoque()
         {
@@ -82,7 +82,7 @@ namespace BlocoX.Utils.Arquivos
             var blocoxEstoque = new BlocoX.Modelos.Estoque.BlocoXEstoque(
                 new Modelos.Estabelecimento("257477110"),
                 new Modelos.PafEcf("123456789012345"),
-                new Modelos.Estoque.DadosEstoque(new DateTime(2019, 04, 01), new List<Modelos.Estoque.Produto> { produtoAliquota17, produtoAliquota12 })
+                new Modelos.Estoque.DadosEstoque(new DateTime(2020, 08, 31), new List<Modelos.Estoque.Produto> { produtoAliquota17, produtoAliquota12 })
                 );
 
             return blocoxEstoque;

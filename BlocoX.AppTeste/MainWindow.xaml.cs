@@ -184,6 +184,8 @@ namespace BlocoX.AppTeste
 
         private void btnTransmitirReducaoZ_Click(object sender, RoutedEventArgs e)
         {
+            ValidarConfiguracaoServico();
+
             var input = selecionarArquivo("Selecionar arquivo XML", ".xml", "Arquivo XML (.xml)|*.xml");
             var xmlDoc = new System.Xml.XmlDocument();
             if (string.IsNullOrWhiteSpace(input))
@@ -197,7 +199,19 @@ namespace BlocoX.AppTeste
                     return;
                 }
 
-                xmlDoc = new Utils.Arquivos.Exemplo().BlocoXRz();
+                if (string.IsNullOrWhiteSpace(txtEstabelecimentoIe.Text))
+                {
+                    mensagemAviso("O número da Inscrição estadual é obrigatório!\nPreencher na aba Estabeleecimento!");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtNumeroCredenciamentoSW.Text))
+                {
+                    mensagemAviso("O número do credenciamento da Software House é obrigatório!\nPreencher na aba Software!");
+                    return;
+                }
+
+                xmlDoc = new Utils.Arquivos.Exemplo().BlocoXRz(txtEstabelecimentoIe.Text, txtNumeroCredenciamentoSW.Text);
                 xmlDoc.AssinarXML("ReducaoZ", config.Certificado);
             }
             else
