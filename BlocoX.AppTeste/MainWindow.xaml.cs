@@ -67,9 +67,9 @@ namespace BlocoX.AppTeste
 
             txtLocalCertificado.Text = readSetting("localCertificado");
             txtSenhaCertificado.Text = readSetting("senhaCertificado");
-            //rdbXsdSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seValidaXsd")) ? "0" : readSetting("seValidaXsd"));
+            //rdbXsdSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seValidaXsd")) ? "false" : readSetting("seValidaXsd"));
             //txtDiretorioXsd.Text = readSetting("diretorioXsd");
-            rdbArquivosSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seSalvaArquivo")) ? "0" : readSetting("seSalvaArquivo"));
+            rdbArquivosSim.IsChecked = Convert.ToBoolean(string.IsNullOrWhiteSpace(readSetting("seSalvaArquivo")) ? "false" : readSetting("seSalvaArquivo"));
             txtDiretorioSalvaArquivo.Text = readSetting("diretorioSalvaArquivo");
 
             txtEstabelecimentoRazaoSocial.Text = readSetting("estabelecimentoRazaoSocial");
@@ -144,10 +144,11 @@ namespace BlocoX.AppTeste
 
         private void btnConsultarPendenciaContribuinte_Click(object sender, RoutedEventArgs e)
         {
-            var input = showInput("Consultar Pendencia Contribuinte", "Informe o número da Inscrição Estadual:");
+            var input = txtEstabelecimentoIe.Text;
+
             if (string.IsNullOrWhiteSpace(input))
             {
-                mensagemAviso("O número da Inscrição estadual é obrigatório!");
+                mensagemAviso("O número da Inscrição estadual é obrigatório!\nPreencher na aba Estabeleecimento!");
                 return;
             }
 
@@ -157,10 +158,10 @@ namespace BlocoX.AppTeste
 
         private void btnConsultarPendenciDesenvolvedorPafEcf_Click(object sender, RoutedEventArgs e)
         {
-            var input = showInput("Consultar Pendencia Desenvolvedor PAF ECF", "Informe o número o CNPJ:");
+            var input = txtNumeroCredenciamentoSW.Text;
             if (string.IsNullOrWhiteSpace(input))
             {
-                mensagemAviso("O número do CNPJ é obrigatório!");
+                mensagemAviso("O número do credenciamento da Software House é obrigatório!\nPreencher na aba Software!");
                 return;
             }
 
@@ -170,10 +171,10 @@ namespace BlocoX.AppTeste
 
         private void btnListarArquivos_Click(object sender, RoutedEventArgs e)
         {
-            var input = showInput("Listar Arquivos", "Informe o número da Inscrição Estadual:");
+            var input = txtEstabelecimentoIe.Text;
             if (string.IsNullOrWhiteSpace(input))
             {
-                mensagemAviso("O número da Inscrição estadual é obrigatório!");
+                mensagemAviso("O número da Inscrição estadual é obrigatório!\nPreencher na aba Estabeleecimento!");
                 return;
             }
 
@@ -296,10 +297,10 @@ namespace BlocoX.AppTeste
             addUpdateAppSettings("localCertificado", txtLocalCertificado.Text);
             addUpdateAppSettings("senhaCertificado", txtSenhaCertificado.Text);
 
-            //addUpdateAppSettings("seValidaXsd", rdbXsdSim.IsChecked ?? false ? "1" : "0");
+            //addUpdateAppSettings("seValidaXsd", rdbXsdSim.IsChecked ?? false ? "true" : "false");
             //addUpdateAppSettings("diretorioXsd", txtDiretorioXsd.Text);
 
-            addUpdateAppSettings("seSalvaArquivo", rdbArquivosSim.IsChecked ?? false ? "1" : "0");
+            addUpdateAppSettings("seSalvaArquivo", rdbArquivosSim.IsChecked ?? false ? "true" : "false");
             addUpdateAppSettings("diretorioSalvaArquivo", txtDiretorioSalvaArquivo.Text);
 
             addUpdateAppSettings("estabelecimentoRazaoSocial", txtEstabelecimentoRazaoSocial.Text);
