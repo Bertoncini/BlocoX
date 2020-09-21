@@ -88,7 +88,7 @@ namespace BlocoX.Servicos.wsdl
                 foreach (var param in Params)
                 {
                     if (encode)
-                        postValues += string.Format("<{0}>{1}</{0}>", HttpUtility.UrlEncode(param.Key.Trim()), HttpUtility.UrlEncode(param.Value.Trim()));
+                        postValues += string.Format("<{0}>{1}</{0}>", System.Net.WebUtility.UrlEncode(param.Key.Trim()), System.Net.WebUtility.UrlEncode(param.Value.Trim()));
                     else
                         postValues += string.Format("<{0}>{1}</{0}>", param.Key.Trim(), param.Value.Trim());
                 }

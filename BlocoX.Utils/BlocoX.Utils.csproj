@@ -1,75 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4E1F0F4-BA8D-4ADF-8163-44128A5C974B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BlocoX.Utils</RootNamespace>
-    <AssemblyName>BlocoX.Utils</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Arquivos\Exemplo.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="DynamicJsonConverter.cs" />
-    <Compile Include="Enums\Alinhamento.cs" />
-    <Compile Include="Xml\Interfaces\IBlocoX.cs" />
-    <Compile Include="Xml\Utils.cs" />
-    <Compile Include="Xml\ReducaoZ\Tags\EcfTag.cs" />
-    <Compile Include="Xml\HeaderXML.cs" />
-    <Compile Include="Xml\ReducaoZ\Tags\DadosReducaoZTag.cs" />
-    <Compile Include="Xml\EstabelecimentoTag.cs" />
-    <Compile Include="Xml\PafEcfTag.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="str.cs" />
-    <Compile Include="XML.cs" />
-    <Compile Include="Xml\ReducaoZ\Tags\ProdutosServicosTag.cs" />
-    <Compile Include="Xml\ReducaoZ\Tags\TotalizadoresTag.cs" />
-    <Compile Include="Xml\ReducaoZ\XmlReducaoZ.cs" />
-    <Compile Include="Xml\XMLBlocoX.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BlocoX.Modelos\BlocoX.Modelos.csproj">
-      <Project>{875437ff-b761-4105-b2ac-59a6848b917d}</Project>
-      <Name>BlocoX.Modelos</Name>
-    </ProjectReference>
-  </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Xml\Estoque\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlocoX.Modelos\BlocoX.Modelos.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Security.Cryptography.Xml">
+      <Version>4.7.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">    
+    <Reference Include="System.Security" />
+  </ItemGroup>
+
 </Project>

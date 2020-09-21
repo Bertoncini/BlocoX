@@ -39,7 +39,7 @@ namespace BlocoX.Utils
     {
         public static XmlDocument RzJsonToXml(this string json)
         {
-            dynamic jsonObject = DynamicJsonConverter.ConvertToObject(json);
+            var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(json);
 
             var xml =
             $@"<?xml version='1.0' encoding='UTF‐8'?>
@@ -75,7 +75,7 @@ namespace BlocoX.Utils
 
         public static XmlDocument EstoqueJsonToXml(this string json)
         {
-            dynamic jsonObject = DynamicJsonConverter.ConvertToObject(json);
+            var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(json);
 
             var xml =
           $@"<?xml version='1.0' encoding='UTF‐8'?>
@@ -429,6 +429,7 @@ namespace BlocoX.Utils
 
         public static XmlDocument AssinarXML(this XmlDocument xmlDocument, string tagAssinatura, X509Certificate2 certificado)
         {
+#if NET45
             var reference = new System.Security.Cryptography.Xml.Reference
             {
                 Uri = ""
@@ -448,6 +449,28 @@ namespace BlocoX.Utils
             var keyInfo = new System.Security.Cryptography.Xml.KeyInfo();
 
             keyInfo.AddClause(new System.Security.Cryptography.Xml.KeyInfoX509Data(certificado));
+#else
+            var reference = new System.Security.Cryptography.Xml.Reference
+            {
+                Uri = ""
+            };
+
+            var signedXml = new System.Security.Cryptography.Xml.SignedXml(xmlDocument)
+            {
+                SigningKey = certificado.PrivateKey
+            };
+
+            reference.AddTransform(new System.Security.Cryptography.Xml.XmlDsigEnvelopedSignatureTransform());
+
+            reference.AddTransform(new System.Security.Cryptography.Xml.XmlDsigC14NTransform());
+
+            signedXml.AddReference(reference);
+
+            var keyInfo = new System.Security.Cryptography.Xml.KeyInfo();
+
+            keyInfo.AddClause(new System.Security.Cryptography.Xml.KeyInfoX509Data(certificado));
+#endif
+
 
             signedXml.KeyInfo = keyInfo;
 

@@ -66,15 +66,18 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlocoX.Modelos\BlocoX.Modelos.csproj">
-      <Project>{875437FF-B761-4105-B2AC-59A6848B917D}</Project>
+      <Project>{e87e461a-a99a-40ea-832d-b98a39fb9a6a}</Project>
       <Name>BlocoX.Modelos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BlocoX.Servicos\BlocoX.Servicos.csproj">
+      <Project>{9f87e17c-f537-4dae-8870-9de4e7beb2c8}</Project>
+      <Name>BlocoX.Servicos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlocoX.Utils\BlocoX.Utils.csproj">
-      <Project>{a4e1f0f4-ba8d-4adf-8163-44128a5c974b}</Project>
+      <Project>{b3029001-37f3-4450-9b24-47e642a3dc11}</Project>
       <Name>BlocoX.Utils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

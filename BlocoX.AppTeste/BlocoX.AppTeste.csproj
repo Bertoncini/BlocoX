@@ -104,11 +104,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlocoX.Servicos\BlocoX.Servicos.csproj">
-      <Project>{30be510b-3248-4681-baac-9cfed518e7cf}</Project>
+      <Project>{9f87e17c-f537-4dae-8870-9de4e7beb2c8}</Project>
       <Name>BlocoX.Servicos</Name>
     </ProjectReference>
     <ProjectReference Include="..\BlocoX.Utils\BlocoX.Utils.csproj">
-      <Project>{A4E1F0F4-BA8D-4ADF-8163-44128A5C974B}</Project>
+      <Project>{b3029001-37f3-4450-9b24-47e642a3dc11}</Project>
       <Name>BlocoX.Utils</Name>
     </ProjectReference>
   </ItemGroup>

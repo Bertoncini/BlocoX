@@ -33,7 +33,6 @@ namespace BlocoX.Utils.Arquivos
     using BlocoX.Utils.Xml;
     using System;
     using System.Collections.Generic;
-    using System.Web.Script.Serialization;
     using System.Xml;
 
     public class Exemplo
@@ -72,7 +71,7 @@ namespace BlocoX.Utils.Arquivos
             => new ProdutoServico("PRODUTO ALIQUOTA 1200", "0", "1400300", "11041900", "220602", 2, "UN", 0M, 0M, 0M, 1000M, false);
 
 
-        public string RzJson(string ie, string numeroCredenciamentoSW) => new JavaScriptSerializer().Serialize(BlocoXRz(ie, numeroCredenciamentoSW));
+        //public string RzJson(string ie, string numeroCredenciamentoSW) => new JavaScriptSerializer().Serialize(BlocoXRz(ie, numeroCredenciamentoSW));
 
         public Modelos.Estoque.BlocoXEstoque BlocoXEstoque()
         {
@@ -88,7 +87,13 @@ namespace BlocoX.Utils.Arquivos
             return blocoxEstoque;
         }
 
-        public string EstoqueJson() => new JavaScriptSerializer().Serialize(BlocoXEstoque());
+        public string EstoqueJson()
+        {
+
+            //=> new System.Text.Json JavaScriptSerializer().Serialize(BlocoXEstoque());
+            //var x = new System.Text.JSon
+            return "";
+        }
 
         public XmlDocument EstoqueXml() => BlocoXEstoque().BlocoXEstoqueToXml();
 

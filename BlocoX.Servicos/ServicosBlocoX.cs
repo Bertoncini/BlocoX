@@ -31,6 +31,7 @@ namespace BlocoX.Servicos
 {
     using BlocoX.Servicos.wsdl;
     using BlocoX.Utils;
+    using BlocoX.Utils.Xml;
     using System;
     using System.IO;
     using System.IO.Compression;
@@ -54,8 +55,8 @@ namespace BlocoX.Servicos
         public Retorno CancelarArquivo(string recibo, string motivo)
         {
             var ws = new WebService(urlWebServicesBase, "CancelarArquivo", SoapActionBase);
-            var xml = Utils.XML.BlocoXCancelarArquivoToXml(recibo, motivo).InnerXml;
-            var pXml = Utils.XML.AssinarXML(xml, "Manutencao", _config.Certificado);
+            var xml = BlocoX.Utils.XML.BlocoXCancelarArquivoToXml(recibo, motivo).InnerXml;
+            var pXml = BlocoX.Utils.XML.AssinarXML(xml, "Manutencao", _config.Certificado);
 
             salvarArquivo(pXml, "CancelarArquivo", $"Env_{recibo}.xml");
 
@@ -71,8 +72,8 @@ namespace BlocoX.Servicos
         public Retorno ConsultarHistoricoArquivo(string recibo)
         {
             var ws = new WebService(urlWebServicesBase, "ConsultarHistoricoArquivo", SoapActionBase);
-            var xml = Utils.XML.BlocoXConsultarHistoricoArquivoToXml(recibo).InnerXml;
-            var pXml = Utils.XML.AssinarXML(xml, "ConsultarHistoricoArquivo", _config.Certificado);
+            var xml = BlocoX.Utils.XML.BlocoXConsultarHistoricoArquivoToXml(recibo).InnerXml;
+            var pXml = BlocoX.Utils.XML.AssinarXML(xml, "ConsultarHistoricoArquivo", _config.Certificado);
 
             salvarArquivo(pXml, "ConsultarHistoricoArquivo", $"Env_{recibo}.xml");
 
@@ -88,8 +89,8 @@ namespace BlocoX.Servicos
         public Retorno ConsultarPendenciasContribuinte(string ie)
         {
             var ws = new WebService(urlWebServicesBase, "ConsultarPendenciasContribuinte", SoapActionBase);
-            var xml = Utils.XML.BlocoXConsultarPendenciasContribuinteToXml(ie).InnerXml;
-            var pXml = Utils.XML.AssinarXML(xml, "ConsultarPendenciasContribuinte", _config.Certificado);
+            var xml = BlocoX.Utils.XML.BlocoXConsultarPendenciasContribuinteToXml(ie).InnerXml;
+            var pXml = BlocoX.Utils.XML.AssinarXML(xml, "ConsultarPendenciasContribuinte", _config.Certificado);
 
             salvarArquivo(pXml, "ConsultarPendenciasContribuinte", $"Env_{ie}.xml");
             ws.Params.Add("pXml", pXml.Replace("<", "&lt;").Replace(">", "&gt;"));
@@ -103,8 +104,8 @@ namespace BlocoX.Servicos
         public Retorno ConsultarPendenciasDesenvolvedorPafEcf(string cnpj)
         {
             var ws = new WebService(urlWebServicesBase, "ConsultarPendenciasDesenvolvedorPafEcf", SoapActionBase);
-            var xml = Utils.XML.BlocoXConsultarPendenciasDesenvolvedorPafEcfToXml(cnpj).InnerXml;
-            var pXml = Utils.XML.AssinarXML(xml, "ConsultarPendenciasDesenvolvedorPafEcf", _config.Certificado);
+            var xml = BlocoX.Utils.XML.BlocoXConsultarPendenciasDesenvolvedorPafEcfToXml(cnpj).InnerXml;
+            var pXml = BlocoX.Utils.XML.AssinarXML(xml, "ConsultarPendenciasDesenvolvedorPafEcf", _config.Certificado);
 
             salvarArquivo(pXml, "ConsultarPendenciasDesenvolvedorPafEcf", $"Env_{cnpj}.xml");
             ws.Params.Add("pXml", pXml.Replace("<", "&lt;").Replace(">", "&gt;"));
@@ -118,8 +119,8 @@ namespace BlocoX.Servicos
         public Retorno ConsultarProcessamentoArquivo(string recibo)
         {
             var ws = new WebService(urlWebServicesBase, "ConsultarProcessamentoArquivo", SoapActionBase);
-            var xml = Utils.XML.BlocoXConsultarProcessamentoArquivoToXml(recibo).InnerXml;
-            var pXml = Utils.XML.AssinarXML(xml, "Manutencao", _config.Certificado);
+            var xml = BlocoX.Utils.XML.BlocoXConsultarProcessamentoArquivoToXml(recibo).InnerXml;
+            var pXml = BlocoX.Utils.XML.AssinarXML(xml, "Manutencao", _config.Certificado);
 
             salvarArquivo(pXml, "ConsultarProcessamentoArquivo", $"Env_{recibo}.xml");
             ws.Params.Add("pXml", pXml.Replace("<", "&lt;").Replace(">", "&gt;"));
@@ -133,8 +134,8 @@ namespace BlocoX.Servicos
         public Retorno ListarArquivos(string ie)
         {
             var ws = new WebService(urlWebServicesBase, "ListarArquivos", SoapActionBase);
-            var xml = Utils.XML.BlocoXListaArquivosToXml(ie).InnerXml;
-            var pXml = Utils.XML.AssinarXML(xml, "ListarArquivos", _config.Certificado);
+            var xml = BlocoX.Utils.XML.BlocoXListaArquivosToXml(ie).InnerXml;
+            var pXml = BlocoX.Utils.XML.AssinarXML(xml, "ListarArquivos", _config.Certificado);
 
             salvarArquivo(pXml, "ListarArquivos", $"Env_{ie}.xml");
             ws.Params.Add("pXml", pXml.Replace("<", "&lt;").Replace(">", "&gt;"));
@@ -182,8 +183,8 @@ namespace BlocoX.Servicos
         public Retorno DownloadArquivo(string recibo)
         {
             var ws = new WebService(urlWebServicesBase, "DownloadArquivo", SoapActionBase);
-            var xml = Utils.XML.BlocoXDownloadArquivoToXml(recibo).InnerXml;
-            var pXml = Utils.XML.AssinarXML(xml, "DownloadArquivo", _config.Certificado);
+            var xml = BlocoX.Utils.XML.BlocoXDownloadArquivoToXml(recibo).InnerXml;
+            var pXml = BlocoX.Utils.XML.AssinarXML(xml, "DownloadArquivo", _config.Certificado);
 
             salvarArquivo(pXml, "DownloadArquivo", $"Env_{recibo}.xml");
             ws.Params.Add("pXml", pXml.Replace("<", "&lt;").Replace(">", "&gt;"));
